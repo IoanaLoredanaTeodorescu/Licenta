@@ -1,0 +1,40 @@
+.tabs-wrapper {
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	font-size: 18px;
+
+	.tab {
+		box-sizing: border-box;
+		min-width: auto;
+		padding: 10px 0;
+		margin-left: 10px;
+		margin-right: 10px;
+		text-align: center;
+		text-transform: uppercase;
+		color: $lightBlue;
+		font-weight: 800;
+		cursor: pointer;
+	}
+
+	.tab:hover {
+		background-color: rgba(80, 85, 85, 0.8);
+		border-radius: 5px;
+
+	}
+	.tab:active {
+		background-color: white;
+	}
+
+	.selected {
+		border-bottom: 3px solid $darkBlue;
+		color: $darkBlue;
+		cursor: default;
+	}
+	.selected:hover {
+		background-color: transparent;
+		border-radius: 0px;
+	}
+}

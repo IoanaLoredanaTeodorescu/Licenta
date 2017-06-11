@@ -1,0 +1,51 @@
+.header {
+    .all-header {
+        height: 80px;
+    	width: 100%;
+    	display:flex;
+    	flex-direction: row;
+    	justify-content: flex-start;
+
+        .left-side {
+            text-transform: uppercase;
+            color: white;
+            background-color: $darkBlue;
+    		width: 30%;
+    		height: 100%;
+    		display: flex;
+    		flex-direction: column;
+    		justify-content: center;
+    		align-items: flex-end;
+    		padding-right: 20px;
+    		padding-left: 20px;
+    		min-width: 260px;
+    		position: relative;
+
+            .restaurante {
+                font-size: 35px;
+                font-weight: 700;
+            }
+
+            .iasi {
+                font-size: 20px;
+            }
+        }
+
+        .right-side {
+    		height: 100%;
+    		width: 70%;
+    		min-width: 550px;
+            display: flex;
+    		align-items: flex-end;
+            padding: 0 20px;
+
+            .main {
+                display: flex;
+        		flex-direction: column;
+        		justify-content: center;
+            }
+        }
+
+
+    }
+}
