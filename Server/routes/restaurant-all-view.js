@@ -13,6 +13,9 @@ function connectionEnd(conn, id) {
 }
 
 router.get('/', function(req, res) {
+
+    var id_restaurant = '0a724a95c7f87eca3f7ed1abe82cf6';
+
     var connection = mysql.createConnection({
                                         host: "localhost",
                                         user: "root",
@@ -31,33 +34,22 @@ router.get('/', function(req, res) {
     });
 
 
-    connection.query('SELECT * FROM restaurants', (err, result) => {
+    connection.query('SELECT * FROM idrestaurant_' + id_restaurant + ';', (err, result) => {
 		var results = null;
 	    if(err) {
 			console.log('Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message);
 			res.json({typeError: 'DBselect', text: 'Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message});
 			connectionEnd(connection, id);
 	    } else {
-			results = result.length;
-			if(results > 0) {
-                 var obj_response = [];
-                 for(var i=0; i < result.length; i++) {
-                     var obj = {};
-                     obj.id = result[i].id;
-                     obj.name = result[i].name;
-                     obj.address = result[i].address;
-                     obj.lat = result[i].lat;
-                     obj.lng = result[i].lng;
-					 obj.tags = result[i].tags;
-					 obj.description = result[i].description;
-                     obj_response.push(obj);
-                 }
-                res.json({typeError: 'NoError', text: 'All restaurants', message: obj_response});
-                connectionEnd(connection, id);
-			} else {
-				res.json({typeError: 'DBinsert', text: 'Error searching in database! \nExecution stopped! \n', message: 'Nu există restaurante in baza de date!'});
-				connectionEnd(connection, id);
-			}
+             var obj_response = [];
+             for(var i=0; i < result.length; i++) {
+                 var obj = {};
+                 obj.user = result[i].user;
+                 obj.review = result[i].message;
+                 obj_response.push(obj);
+             }
+            res.json({typeError: 'NoError', text: 'All restaurants', message: obj_response});
+            connectionEnd(connection, id);
 	    }
 	});
 });

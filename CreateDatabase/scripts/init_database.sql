@@ -4,8 +4,7 @@ CREATE OR REPLACE TABLE restaurants (
 	address VARCHAR(50),
 	lat VARCHAR(20),
 	lng VARCHAR(20),
+	tags VARCHAR(50),
+	description VARCHAR(250),
 	PRIMARY KEY(id)
 );
-CREATE OR REPLACE TABLE tags (
-	id VARCHAR(30) NOT NULL,
-	tag VARCHAR(30));

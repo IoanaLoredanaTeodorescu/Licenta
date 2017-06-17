@@ -1,20 +1,46 @@
-.restaurant {
-    background-color: rgba(255, 255, 255, 0.6);
-    min-width: 700px;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
+.restaurants-wrapper {
+    margin-top: 50px;
 
-    .name-restaurant {
-        color: black;
-        font-weight: 700;
-        font-size: 25px;
+    .restaurant {
+        background-color: rgba(255, 255, 255, 0.6);
+        min-width: 200px;
+        max-width: 850px;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+
+        .name-restaurant {
+            color: black;
+            font-weight: 700;
+            font-size: 25px;
+        }
+
+        .address-restaurant {
+            color: black;
+            font-size: 16px;
+            margin-left: 10px;
+            margin-top: 15px;
+        }
+
+        .tags {
+            margin-left: 20px;
+            margin-top: 20px;
+
+            .tag {
+                background-color: grey;
+                border-radius: 10px;
+                padding: 5px;
+                margin: 0 5px;
+            }
+        }
+
+        .description {
+            margin-left: 30px;
+            margin-top: 20px;
+        }
     }
 
-    .address-restaurant {
-        color: black;
-        font-size: 16px;
-        margin-left: 10px;
-        margin-top: 15px;
+    .restaurant:hover {
+        cursor: pointer;
     }
 }

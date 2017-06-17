@@ -43,7 +43,7 @@ class Autentificare extends Component {
                     if(resp.typeError === 'NoError') {
                         console.log(resp.message);
                         //this.props.redirectToLogin();
-                        console.log(this.props);
+                        this.props.loginCallback();
                         this.setState({
                             email: '',
                             password: ''
@@ -94,36 +94,38 @@ class Autentificare extends Component {
     render() {
         let {emailError, passwordError, loginError} = this.state;
         return (
-            <div className='wrapper'>
-                <div className="main-wrapper">
-                    <span className='title'>
-                        autentificare
-                    </span>
-    				<input
-                        id='email'
-    					type="text"
-    					placeholder="Email..."
-                        value={this.state.email}
-                        onChange={this.changeHandler}
-    					className={emailError ? 'error-input' : ''}
-                        onClick={this.handleClick}
-                    />
-    				<span className="error">{emailError}</span>
-    				<input
-                        id='password'
-    					type="password"
-    					placeholder="Password..."
-                        value={this.state.password}
-                        onChange={this.changeHandler}
-    					className={passwordError ? 'error-input' : ''}
-                        onClick={this.handleClick}
-    				/>
+            <div className='vertical-align'>
+                <div className='wrapper'>
+                    <div className="main-wrapper">
+                        <span className='title'>
+                            autentificare
+                        </span>
+        				<input
+                            id='email'
+        					type="text"
+        					placeholder="Email..."
+                            value={this.state.email}
+                            onChange={this.changeHandler}
+        					className={emailError ? 'error-input' : ''}
+                            onClick={this.handleClick}
+                        />
+        				<span className="error">{emailError}</span>
+        				<input
+                            id='password'
+        					type="password"
+        					placeholder="Password..."
+                            value={this.state.password}
+                            onChange={this.changeHandler}
+        					className={passwordError ? 'error-input' : ''}
+                            onClick={this.handleClick}
+        				/>
 
-    				<span className="error">{passwordError}</span>
+        				<span className="error">{passwordError}</span>
 
-    				<span className="error">{loginError}</span>
-    				<button className="form-button" onClick={this.loginRequest}>Autentificare</button>
-    			</div>
+        				<span className="error">{loginError}</span>
+        				<button className="form-button" onClick={this.loginRequest}>Autentificare</button>
+        			</div>
+                </div>
             </div>
         );
     }

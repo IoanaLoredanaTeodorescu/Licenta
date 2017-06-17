@@ -12,19 +12,12 @@ class App extends Component {
     }
 
     isLogged() {
-        this.setState({logged: !this.state.logged})
+        this.setState({logged: !this.state.logged});
     }
 
     render () {
-        if(this.state.logged === false){
-            return (<FirstPage isLogged={this.isLogged}/>);
-        } else {
-            return (
-                <div>
-                    <button onClick={this.isLogged}>logout</button>
-                </div>
-            );
-        }
+        console.log(this.state)
+        return (<FirstPage isLogged={this.isLogged} logged={this.state.logged}/>);
     }
 }
 

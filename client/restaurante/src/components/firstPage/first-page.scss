@@ -19,24 +19,19 @@ html {
 
     .main-page-wrapper {
         height: 80%;
-        display: flex;
-        flex-grow: 1;
-        flex-direction: column;
-        justify-content: center;
+
 
 
         .main-page-content {
-            //background-color: rgba(255,255,255,0.5);
-    		//width: 100%;
-    		//padding: 30px 0;
+            height: 100%;
 
             .output-tab-place {
-                //margin-top: 200px;
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
     			height: auto;
     			width: 100%;
+                height: 100%;
     			margin: 0 auto;
     		}
         }

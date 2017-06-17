@@ -263,57 +263,59 @@ class SignupForm extends Component {
 	render() {
 		let {fullNameError, emailError, passwordError, rePasswordError} = this.state;
 		return (
-			<div className='wrapper'>
-				<div className='main-wrapper'>
-	                <span className='title'>
-	                    înregistrare
-	                </span>
-					<input
-						id='fullNameValue'
-						type='text'
-						placeholder='Fullname...'
-						value={this.state.fullNameValue}
-						onChange={this.changeHandler}
-						className={fullNameError ? 'error-input' : ''}
-						onClick={this.handleClick}
-					/>
-						<p className='error'>{this.state.fullNameError}</p>
-					<input
-						id='emailValue'
-						type='text'
-						placeholder='Email...'
-						value={this.state.emailValue}
-						onChange={this.changeHandler}
-						className={emailError ? 'error-input' : ''}
-						onClick={this.handleClick}
-					/>
-						<p className='error'>{this.state.emailError}</p>
-					<input
-						id='passwordValue'
-						type='password'
-						placeholder='Password...'
-						value={this.state.passwordValue}
-						onChange={this.changeHandler}
-						className={passwordError ? 'error-input' : ''}
-						onClick={this.handleClick}
-					/>
-						<p className='error'>{this.state.passwordError}</p>
-					<input
-						id='rePasswordValue'
-						type='password'
-						placeholder='RePassword...'
-						value={this.state.rePasswordValue}
-						onChange={this.changeHandler}
-						className={rePasswordError ? 'error-input' : ''}
-						onClick={this.handleClick}
-					/>
-						<p className='error'>{this.state.rePasswordError}</p>
-						<p className='error'>{this.state.signupError}</p>
-					<button
-							className='form-button'
-							onClick={this.signUpRequest}>
-								{this.props.buttonName}
-					</button>
+			<div className='vertical-align'>
+				<div className='wrapper'>
+					<div className='main-wrapper'>
+		                <span className='title'>
+		                    înregistrare
+		                </span>
+						<input
+							id='fullNameValue'
+							type='text'
+							placeholder='Fullname...'
+							value={this.state.fullNameValue}
+							onChange={this.changeHandler}
+							className={fullNameError ? 'error-input' : ''}
+							onClick={this.handleClick}
+						/>
+							<p className='error'>{this.state.fullNameError}</p>
+						<input
+							id='emailValue'
+							type='text'
+							placeholder='Email...'
+							value={this.state.emailValue}
+							onChange={this.changeHandler}
+							className={emailError ? 'error-input' : ''}
+							onClick={this.handleClick}
+						/>
+							<p className='error'>{this.state.emailError}</p>
+						<input
+							id='passwordValue'
+							type='password'
+							placeholder='Password...'
+							value={this.state.passwordValue}
+							onChange={this.changeHandler}
+							className={passwordError ? 'error-input' : ''}
+							onClick={this.handleClick}
+						/>
+							<p className='error'>{this.state.passwordError}</p>
+						<input
+							id='rePasswordValue'
+							type='password'
+							placeholder='RePassword...'
+							value={this.state.rePasswordValue}
+							onChange={this.changeHandler}
+							className={rePasswordError ? 'error-input' : ''}
+							onClick={this.handleClick}
+						/>
+							<p className='error'>{this.state.rePasswordError}</p>
+							<p className='error'>{this.state.signupError}</p>
+						<button
+								className='form-button'
+								onClick={this.signUpRequest}>
+									{this.props.buttonName}
+						</button>
+					</div>
 				</div>
 			</div>
 		);

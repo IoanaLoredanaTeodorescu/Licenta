@@ -1,17 +1,32 @@
 const firstPageTabs = [{
-		id: 1,
+		id: 'all-restaurants',
 		name: 'Restaurante'
 	}, {
-		id: 2,
+		id: 'map-logged-false',
 		name: 'Hartă'
     }, {
-		id: 3,
+		id: 'login',
 		name: 'Autentificare'
 	}, {
-		id: 4,
+		id: 'signup',
 		name: 'Înregistrare'
 	}];
 
+const firstPageLoggedTabs = [{
+		id: 'my-restaurants',
+		name: 'Restaurantele mele'
+	}, {
+		id: 'map-logged-true',
+		name: 'Hartă'
+    }, {
+		id: 'all-restaurants',
+		name: 'Restaurante'
+	}, {
+		id: 'logout',
+		name: 'Logout'
+	}];
+
 export default {
-	firstPageTabs
+	firstPageTabs,
+	firstPageLoggedTabs
 }
