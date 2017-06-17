@@ -11,7 +11,8 @@ class Autentificare extends Component {
 			password: '',
 			emailError: '',
 			passwordError: '',
-			loginError: ''
+			loginError: '',
+            userData: {}
 		}
 		this.loginRequest = this.loginRequest.bind(this);
 		this.handleClick = this.handleClick.bind(this);
@@ -32,7 +33,7 @@ class Autentificare extends Component {
 		});
 
 		if(validEmail && validPassword) {
-            return fetch('/login', {method: 'GET'})
+            return fetch('/login', {method: 'POST', body: JSON.stringify({email: email, password: password}), headers: {"Content-Type": "application/json"}})
                 .then(res => {
                     if(typeof res === 'object') {
                         this.setState({loginError: ''});
@@ -41,13 +42,13 @@ class Autentificare extends Component {
                 })
                 .then(resp => {
                     if(resp.typeError === 'NoError') {
-                        console.log(resp.message);
-                        //this.props.redirectToLogin();
                         this.props.loginCallback();
+                        this.props.redirect();
                         this.setState({
                             email: '',
                             password: ''
                         });
+                        this.props.userData(resp.message);
                     } else {
                         if(resp.message) {
                             this.setState({loginError: resp.message});
@@ -58,16 +59,6 @@ class Autentificare extends Component {
                     this.setState({loginError: 'A apărut o eroare neașteptată la autentificare!'});
                     console.error('Error->', e);
             });
-			/*let response = await UserdataService.getUserData({email, password})
-			.catch(e => {
-				this.setState({loginError: 'There has been a problem with your login operation'});
-				console.error("Error-> ",e);
-			});
-			if(typeof response === 'object') {
-				this.props.loginCallback(response);
-			} else {
-				this.setState({loginError: 'Wrong username or password!'});
-			}*/
 		}
 	}
 

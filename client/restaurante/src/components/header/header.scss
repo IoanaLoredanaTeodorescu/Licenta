@@ -44,6 +44,25 @@
         		flex-direction: column;
         		justify-content: center;
             }
+
+            .top {
+                position: absolute;
+                width: 65%;
+                min-width: 650px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                align-items: flex-end;
+                top: 0;
+
+                .buttons-logged-true {
+
+                }
+
+                .buttons-logged-true:hover {
+                    cursor: pointer;
+                }
+            }
         }
 
 

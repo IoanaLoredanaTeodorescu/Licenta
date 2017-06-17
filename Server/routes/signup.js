@@ -55,9 +55,9 @@ router.post('/', (req, res, next) => {
 // 	console.log(res);
 // });
 	//console.log(req.body);
-	var fullNameValue='loredana',
-		emailValue='aa',
-		passwordValue='a';
+	var fullNameValue = req.body.fullName,
+		emailValue = req.body.email,
+		passwordValue = req.body.password;
 
 	var connection = mysql.createConnection({
 										host: "localhost",

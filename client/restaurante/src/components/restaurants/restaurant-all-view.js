@@ -10,7 +10,8 @@ class RestaurantAllView extends Component {
     }
 
     componentWillMount() {
-        fetch('/restaurantid', {method: 'GET'})
+        //fetch('/restaurantid', {method: 'POST', body: JSON.stringify({id_restaurant: this.props.idRestaurant}), headers: {"Content-Type": "application/json"}})
+        fetch('/restaurantid/'+this.props.idRestaurant, {method: 'GET'})
         .then(response => {
             if(typeof response === 'object') {
                 return response.json();
@@ -34,7 +35,7 @@ class RestaurantAllView extends Component {
         let {restaurantReviews} = this.state;
         console.log(restaurantReviews);
         if(restaurantReviews.length === 0) {
-            console.log ('lallaal');
+            console.log ('0 reviews');
         } else {
             restaurantReviews.map(review => {
                 console.log(review.user);

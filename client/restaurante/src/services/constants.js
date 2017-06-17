@@ -21,9 +21,6 @@ const firstPageLoggedTabs = [{
     }, {
 		id: 'all-restaurants',
 		name: 'Restaurante'
-	}, {
-		id: 'logout',
-		name: 'Logout'
 	}];
 
 export default {

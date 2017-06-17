@@ -16,19 +16,21 @@ class FirstPage extends Component {
             selectedTab: 'all-restaurants',
             restaurants: [],
             showOneRestaurant: false,
-            idRestaurantShowed: ''
+            idRestaurantShowed: '',
+            userData: {},
+            logged: false
         }
         this.changeTab = this.changeTab.bind(this);
         this.getSelectedTabView = this.getSelectedTabView.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleButtonClicked = this.handleButtonClicked.bind(this);
+        this.setUserData = this.setUserData.bind(this);
     }
 
     changeTab(id) {
 		this.setState({
             selectedTab: id,
-            showOneRestaurant: false,
-            logged: false
+            showOneRestaurant: false
         });
 	}
 
@@ -64,6 +66,10 @@ class FirstPage extends Component {
         this.setState({showOneRestaurant: false});
     }
 
+    setUserData(userData) {
+        this.setState({userData: userData});
+    }
+
 
     getSelectedTabView(id) {
 		switch(id){
@@ -75,16 +81,13 @@ class FirstPage extends Component {
 			case 'map-logged-false':
 				return (<RestaurantsMap restaurants={this.state.restaurants} />);
 			case 'login':
-				return (<Autentificare loginCallback={this.props.isLogged} />);
+				return (<Autentificare loginCallback={this.props.isLogged} userData={this.setUserData} redirect={this.changeTab.bind(this, 'my-restaurants')}/>);
 			case 'signup':
 				return (<Inregistrare buttonName='Înregistrare' typeOfButton='signup' redirectToLogin={this.changeTab.bind(this, 'login')} />);
             case 'my-restaurants':
                 return (<div>restaurantele mele</div>);
             case 'map-logged-true':
                 return (<div>harta mea</div>);
-            case 'logout':
-                this.props.isLogged;
-                break;
             default:
                 if(this.state.showOneRestaurant === false)
                     return (<AllRestaurants restaurants={this.state.restaurants} onClick={this.handleClick}/>);
@@ -99,7 +102,6 @@ class FirstPage extends Component {
                 return Constants.firstPageTabs;
                 break;
             case true:
-                //this.setState({selectedTab: 'my-restaurants'});
                 return Constants.firstPageLoggedTabs;
                 break
             default:
@@ -114,7 +116,12 @@ class FirstPage extends Component {
             <div className="main-page">
                 <div className='bg'></div>
                 <div className='header'>
-                    <Header callback={this.changeTab} tabs={tabs} selectedTab={this.state.selectedTab} />
+                    <Header
+                        callback={this.changeTab}
+                        tabs={tabs}
+                        selectedTab={this.state.selectedTab}
+                        userData={this.state.userData}
+                    />
                 </div>
                 <div className='main-page-wrapper'>
                     <div className='main-page-content'>

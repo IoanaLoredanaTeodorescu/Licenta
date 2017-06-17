@@ -12,9 +12,9 @@ function connectionEnd(conn, id) {
 	});
 }
 
-router.get('/', function(req, res) {
+router.get('/:id', function(req, res) {
 
-    var id_restaurant = '0a724a95c7f87eca3f7ed1abe82cf6';
+    var id_restaurant = req.params.id;
 
     var connection = mysql.createConnection({
                                         host: "localhost",

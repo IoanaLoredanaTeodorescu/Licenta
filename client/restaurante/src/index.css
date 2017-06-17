@@ -76,6 +76,17 @@ table {
       display: flex;
       flex-direction: column;
       justify-content: center; }
+    .header .all-header .right-side .top {
+      position: absolute;
+      width: 65%;
+      min-width: 650px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+      top: 0; }
+      .header .all-header .right-side .top .buttons-logged-true:hover {
+        cursor: pointer; }
 
 .tabs-wrapper {
   display: flex;

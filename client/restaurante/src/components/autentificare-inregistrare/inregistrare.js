@@ -96,7 +96,9 @@ class SignupForm extends Component {
 			case 'signup':
 				if(fullNameError === '' && emailError === '' && passwordError === '' && rePasswordError === ''){
 					let body = {fullNameValue, emailValue, passwordValue};
-					return fetch('/signup', {method: 'POST', body: body})
+					return fetch('/signup', {method: 'POST',
+						body: JSON.stringify({fullName: fullNameValue, email: emailValue, password: passwordValue}), 
+						headers: {"Content-Type": "application/json"}})
       					.then(res => {
 							if(typeof res === 'object') {
 								this.setState({signupError: ''});

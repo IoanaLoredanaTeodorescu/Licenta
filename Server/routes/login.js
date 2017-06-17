@@ -13,10 +13,10 @@ function connectionEnd(conn, id) {
 	});
 }
 
-router.get('/', (req, res, next) => {
+router.post('/', (req, res, next) => {
 
-	var email='a',
-		password='a';
+	var email = req.body.email,
+		password = req.body.password;
 
 	var connection = mysql.createConnection({
 										host: "localhost",
@@ -36,7 +36,7 @@ router.get('/', (req, res, next) => {
 	});
 
 
-	connection.query('SELECT email,password FROM users WHERE email=\"'+email+'\" AND password=\"'+ password +'\"', (err, result, fields) => {
+	connection.query('SELECT * FROM users WHERE email=\"'+email+'\" AND password=\"'+ password +'\"', (err, result, fields) => {
 		var results = null;
 	    if(err) {
 			console.log('Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message);
@@ -49,7 +49,7 @@ router.get('/', (req, res, next) => {
 				connectionEnd(connection, id);
 			} else {
 				if(results === 1) {
-                    res.json({typeError: 'NoError', text: 'This account is valid!', message: 'Welcome! '});
+                    res.json({typeError: 'NoError', text: 'This account is valid!', message: result[0]});
     				connectionEnd(connection, id);
                 }
 			}
