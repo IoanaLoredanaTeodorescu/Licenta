@@ -84,7 +84,6 @@ module.exports = {
 	},
 
 	createTableReviewForEachRestaurant: () => {
-		console.log(reviews)
 
 		var connection = mysql.createConnection({
 										  	host: "localhost",
