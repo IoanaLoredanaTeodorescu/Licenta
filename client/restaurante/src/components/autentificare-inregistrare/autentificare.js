@@ -24,8 +24,8 @@ class Autentificare extends Component {
 		let {email, password} = this.state;
 		let validEmail = isValidInput(email),
 			validPassword = isValidInput(password),
-			emailError = validEmail ? '' : 'Invalid email!',
-			passwordError = validPassword ? '' : 'Invalid password!';
+			emailError = validEmail ? '' : 'Lipsă email!',
+			passwordError = validPassword ? '' : 'Lipsă parolă!';
 
 		this.setState({
 			emailError,
@@ -104,7 +104,7 @@ class Autentificare extends Component {
         				<input
                             id='password'
         					type="password"
-        					placeholder="Password..."
+        					placeholder="Parolă..."
                             value={this.state.password}
                             onChange={this.changeHandler}
         					className={passwordError ? 'error-input' : ''}

@@ -5,19 +5,21 @@ import {isAlphanumeric} from '../../services/form-validation';
 import {areEqual} from '../../services/form-validation';
 import {isEmail} from '../../services/form-validation';
 import {containLettersSpacesOnly} from '../../services/form-validation';
+import {isLowerThanANumber} from '../../services/form-validation';
 
 const ERRORS = {
 	0: '',
-	1: 'Fullname empty!',
-	2: 'Fullname should be at least 4 letters!',
-	3: 'Fullname should contain only letters and spaces!',
-	4: 'Email empty!',
-	5: 'Email not valid!',
-	6: 'Password empty!',
-	7: 'Password should have at least 13 letters!',
-	8: 'Password should have alphanumeric characters!',
-	9: 'RePassword empty!',
-	10: 'RePassword is not equal with password!'
+	1: 'Lipsă nume!',
+	2: 'Numele trebuie să conțină cel puțin 4 caractere!',
+	3: 'Numele trebuie să conțină doar litere și spații!',
+	4: 'Lipsă email!',
+	5: 'Email invalid!',
+	6: 'Lipsă parolă!',
+	7: 'Parola trebuie să conțină cel putn 13 caractere!',
+	8: 'Parola trebuie să conțină doar litere și cifre!',
+	9: 'Lipsă copie parolă!',
+	10: 'Parolele nu se potrivesc!',
+	11: 'Parola poate să conțină maxim 25 de caractere!'
 }
 
 
@@ -97,7 +99,7 @@ class SignupForm extends Component {
 				if(fullNameError === '' && emailError === '' && passwordError === '' && rePasswordError === ''){
 					let body = {fullNameValue, emailValue, passwordValue};
 					return fetch('/signup', {method: 'POST',
-						body: JSON.stringify({fullName: fullNameValue, email: emailValue, password: passwordValue}), 
+						body: JSON.stringify({fullName: fullNameValue, email: emailValue, password: passwordValue}),
 						headers: {"Content-Type": "application/json"}})
       					.then(res => {
 							if(typeof res === 'object') {
@@ -229,7 +231,9 @@ class SignupForm extends Component {
 							if(!isAlphanumeric(input)) {
 								setError(ERRORS[8]);
 							} else {
-								setError(ERRORS[0]);
+								if(!isLowerThanANumber(input, 25)) {
+									setError(ERRORS[11]);
+								} else setError(ERRORS[0]);
 							}
 					}
 			}
@@ -274,7 +278,7 @@ class SignupForm extends Component {
 						<input
 							id='fullNameValue'
 							type='text'
-							placeholder='Fullname...'
+							placeholder='Nume...'
 							value={this.state.fullNameValue}
 							onChange={this.changeHandler}
 							className={fullNameError ? 'error-input' : ''}
@@ -294,7 +298,7 @@ class SignupForm extends Component {
 						<input
 							id='passwordValue'
 							type='password'
-							placeholder='Password...'
+							placeholder='Parolă...'
 							value={this.state.passwordValue}
 							onChange={this.changeHandler}
 							className={passwordError ? 'error-input' : ''}
@@ -304,7 +308,7 @@ class SignupForm extends Component {
 						<input
 							id='rePasswordValue'
 							type='password'
-							placeholder='RePassword...'
+							placeholder='Copiază parola...'
 							value={this.state.rePasswordValue}
 							onChange={this.changeHandler}
 							className={rePasswordError ? 'error-input' : ''}

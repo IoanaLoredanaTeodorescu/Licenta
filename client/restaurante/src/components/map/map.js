@@ -33,6 +33,7 @@ export default class RestaurantsMap extends Component {
     }
 
     render() {
+        console.log(this.props.restaurants)
         return (
                 <div className='map'>
                     <InitialMap

@@ -6,6 +6,10 @@ export function isLengthAtLeastNumber(input,number) {
 	return input.length >= number;
 }
 
+export function isLowerThanANumber(input,number) {
+	return input.length <= number;
+}
+
 export function isFirstCharLetter(input) {
 	let regex = /[a-zA-Z]/g;
 	return input.split("")[0].match(regex) !== null;

@@ -10,8 +10,8 @@ import {
 const InitialMap = withGoogleMap(props => (
         <GoogleMap
             ref={props.onMapLoad}
-            defaultZoom={12}
-            defaultCenter={{lat: 47.1567647, lng: 27.6121708}}
+            defaultZoom={15}
+            defaultCenter={{lat: 47.1739724, lng: 27.5699964}}
             onClick={props.onMapClick}>
             {
                 props.markers.map((marker, index) => {

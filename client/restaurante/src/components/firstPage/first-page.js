@@ -18,11 +18,13 @@ class FirstPage extends Component {
             showOneRestaurant: false,
             idRestaurantShowed: '',
             userData: {},
-            logged: false
+            logged: false,
+            tagRestaurant: ''
         }
         this.changeTab = this.changeTab.bind(this);
         this.getSelectedTabView = this.getSelectedTabView.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        this.handleClickName = this.handleClickName.bind(this);
+        this.handleClickTag = this.handleClickTag.bind(this);
         this.handleButtonClicked = this.handleButtonClicked.bind(this);
         this.setUserData = this.setUserData.bind(this);
     }
@@ -44,6 +46,7 @@ class FirstPage extends Component {
         .then(resp => {
             if(resp.message && typeof resp.message === 'object') {
                 this.setState({restaurants: this.state.restaurants.concat(resp.message)});
+                console.log(resp.message);
             } else {
                 if(resp.message) {
                     console.log(resp.message);
@@ -55,11 +58,21 @@ class FirstPage extends Component {
         });
     }
 
-    handleClick(id) {
+    handleClickName(id) {
         this.setState({
             showOneRestaurant: true,
-            idRestaurantShowed: id
+            idRestaurantShowed: id,
+            tagRestaurant: ''
         });
+    }
+
+    handleClickTag(tag) {
+        this.setState({
+            showOneRestaurant: false,
+            tagRestaurant: tag,
+            idRestaurantShowed: ''
+        });
+        console.log(tag)
     }
 
     handleButtonClicked() {
@@ -74,10 +87,14 @@ class FirstPage extends Component {
     getSelectedTabView(id) {
 		switch(id){
 			case 'all-restaurants':
-                if(this.state.showOneRestaurant === false)
-                    return (<AllRestaurants restaurants={this.state.restaurants} onClick={this.handleClick}/>);
+                if(this.state.showOneRestaurant === false && this.state.tagRestaurant === '')
+                    return (<AllRestaurants restaurants={this.state.restaurants} onClickName={this.handleClickName} onClickTag={this.handleClickTag}/>);
                 else
-                    return (<RestaurantAllView buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
+                    if(this.state.idRestaurantShowed !== '')
+                        return (<RestaurantAllView buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
+                    else
+                        if(this.state.tagRestaurant !== '')
+                            return ;
 			case 'map-logged-false':
 				return (<RestaurantsMap restaurants={this.state.restaurants} />);
 			case 'login':
@@ -90,7 +107,7 @@ class FirstPage extends Component {
                 return (<div>harta mea</div>);
             default:
                 if(this.state.showOneRestaurant === false)
-                    return (<AllRestaurants restaurants={this.state.restaurants} onClick={this.handleClick}/>);
+                    return (<AllRestaurants restaurants={this.state.restaurants} onClickName={this.handleClickName} onClickTag={this.handleClickTag}/>);
                 else
                     return (<RestaurantAllView buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
 		}

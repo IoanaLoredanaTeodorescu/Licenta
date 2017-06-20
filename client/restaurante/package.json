@@ -9,7 +9,8 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-google-maps": "^6.3.0",
-    "react-images": "^0.5.4"
+    "react-images": "^0.5.4",
+    "react-rating": "^0.8.0"
   },
   "devDependencies": {
     "create-react-app-sass": "^1.1.0",

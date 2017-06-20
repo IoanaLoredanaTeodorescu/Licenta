@@ -31,7 +31,7 @@ router.get('/', function(req, res) {
     });
 
 
-    connection.query('SELECT * FROM restaurants', (err, result) => {
+    connection.query('SELECT * FROM restaurants ORDER BY raiting DESC', (err, result) => {
 		var results = null;
 	    if(err) {
 			console.log('Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message);
@@ -49,7 +49,9 @@ router.get('/', function(req, res) {
                      obj.lat = result[i].lat;
                      obj.lng = result[i].lng;
 					 obj.tags = result[i].tags;
-					 obj.description = result[i].description;
+					 obj.phone = result[i].phone;
+					 obj.opening_hours = result[i].opening_hours;
+					 obj.raiting = result[i].raiting;
                      obj_response.push(obj);
                  }
                 res.json({typeError: 'NoError', text: 'All restaurants', message: obj_response});

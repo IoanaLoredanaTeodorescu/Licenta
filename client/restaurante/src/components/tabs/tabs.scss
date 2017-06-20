@@ -14,13 +14,13 @@
 		margin-right: 10px;
 		text-align: center;
 		text-transform: uppercase;
-		color: $lightBlue;
+		color: $n;
 		font-weight: 800;
 		cursor: pointer;
 	}
 
 	.tab:hover {
-		background-color: rgba(80, 85, 85, 0.8);
+		background-color: $tan;
 		border-radius: 5px;
 
 	}
@@ -29,8 +29,8 @@
 	}
 
 	.selected {
-		border-bottom: 3px solid $darkBlue;
-		color: $darkBlue;
+		border-bottom: 3px solid $h;
+		color: $k;
 		cursor: default;
 	}
 	.selected:hover {

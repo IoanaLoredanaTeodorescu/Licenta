@@ -25,7 +25,7 @@
 				text-align: center;
 				font-weight: bold;
 				margin-bottom: 10px;
-		        color: $darkBlue;
+		        color: $b;
 				font-size: 50px;
 		    }
 
@@ -34,14 +34,14 @@
 				width: 100%;
 				height: 30px;
 				padding: 3px 3px 3px 10px;
-				border: 1px solid $borderColorInput;
+				border: 1px solid $a;
 				border-radius: 2px;
 				margin: 5px 0;
 			}
 
 			input::placeholder{
 				font-size: 14px;
-				color: $placeholderColorInput;
+				color: $h;
 			}
 
 			button {
@@ -49,7 +49,7 @@
 				font-weight: 700;
 				font-size: 14px;
 				color: #1F6894;
-				border: 1px solid $borderColorButton;
+				border: 1px solid $k;
 				border-radius: 2px;
 				margin: 0 auto;
 				padding: 6px 20px;
