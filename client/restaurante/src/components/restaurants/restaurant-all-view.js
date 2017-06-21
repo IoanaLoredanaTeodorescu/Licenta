@@ -20,6 +20,7 @@ class RestaurantAllView extends Component {
         .then(resp => {
             if(resp.message && typeof resp.message === 'object') {
                 this.setState({restaurantReviews: this.state.restaurantReviews.concat(resp.message)});
+                console.log(resp.message);
             } else {
                 if(resp.message) {
                     console.log(resp.message);

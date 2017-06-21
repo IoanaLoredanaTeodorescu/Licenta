@@ -134,13 +134,6 @@
                 flex-direction: row;
                 justify-content: flex-start;
 
-                &.expanded {
-                    transition: width 2s;
-                }
-
-                &.collapsed {
-                    transition: width 2s;
-                }
 
                 .tag {
                     background-color: $sienna;
@@ -188,7 +181,7 @@
     content: "";
     position: absolute;
     bottom: 100%;
-    left: 30%;
+    left: 28%;
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;

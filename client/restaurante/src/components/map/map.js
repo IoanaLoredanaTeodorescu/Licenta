@@ -1,11 +1,5 @@
-import _ from "lodash";
 import React, {Component} from "react";
-import {
-    withGoogleMap,
-    GoogleMap,
-    InfoWindow,
-    Marker
-} from "react-google-maps";
+
 import InitialMap from './initial-map';
 
 export default class RestaurantsMap extends Component {
@@ -26,7 +20,8 @@ export default class RestaurantsMap extends Component {
     componentDidMount() {
         let restaurants = this.props.restaurants;
         restaurants.map((item) => {
-            item.showInfo=false
+            item.showInfo=false;
+            return item;
         });
 
         this.setState({restaurants: restaurants});
@@ -146,6 +141,7 @@ export default class RestaurantsMap extends Component {
                     closeInfoWindow={this.closeInfoWindow}
                     closeInfoWindowFromX={this.closeInfoWindowFromX}
                     visibleInfo={this.state.infoWindowVisible}
+                    handleClickOnInfoBox={this.props.handleClickOnInfoBox}
                 />
             );
         } else return ;

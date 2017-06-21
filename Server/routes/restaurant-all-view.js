@@ -34,8 +34,7 @@ router.get('/:id', function(req, res) {
     });
 
 
-    connection.query('SELECT * FROM idrestaurant_' + id_restaurant + ';', (err, result) => {
-		var results = null;
+    connection.query('SELECT * FROM reviews WHERE id=' + id +';', (err, result) => {
 	    if(err) {
 			console.log('Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message);
 			res.json({typeError: 'DBselect', text: 'Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message});
@@ -44,10 +43,15 @@ router.get('/:id', function(req, res) {
              var obj_response = [];
              for(var i=0; i < result.length; i++) {
                  var obj = {};
-                 obj.user = result[i].user;
-                 obj.review = result[i].message;
+                 obj.author_name = result[i].author_name;
+                 obj.profile_photo_url = result[i].profile_photo_url;
+                 obj.rating = result[i].rating;
+                 obj.relative_time_description = result[i].relative_time_description;
+                 obj.message = result[i].message;
                  obj_response.push(obj);
+
              }
+			 console.log(obj_response)
             res.json({typeError: 'NoError', text: 'All restaurants', message: obj_response});
             connectionEnd(connection, id);
 	    }

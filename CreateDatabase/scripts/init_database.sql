@@ -1,3 +1,6 @@
+ALTER TABLE reviews DROP FOREIGN KEY FK_id;
+ALTER TABLE photos DROP FOREIGN KEY FK_id_photos;
+
 CREATE OR REPLACE TABLE restaurants (
 	id VARCHAR(30) NOT NULL UNIQUE,
 	name VARCHAR(100),
@@ -8,7 +11,24 @@ CREATE OR REPLACE TABLE restaurants (
 	phone VARCHAR(15),
 	opening_hours VARCHAR(300),
 	reference VARCHAR(500),
-	photos VARCHAR(2000),
-	raiting VARCHAR(4),
+	rating VARCHAR(4),
 	PRIMARY KEY(id)
 );
+
+CREATE OR REPLACE TABLE reviews (
+	id VARCHAR(30),
+	author_name VARCHAR(100),
+	profile_photo_url VARCHAR(500),
+	rating VARCHAR(4),
+	relative_time_description VARCHAR(25),
+	message VARCHAR(600)
+);
+
+CREATE OR REPLACE TABLE photos (
+	id VARCHAR(30),
+	html_attributions VARCHAR(400),
+	photo_reference VARCHAR(600)
+);
+
+ALTER TABLE reviews ADD CONSTRAINT FK_id FOREIGN KEY (id) REFERENCES restaurants(id);
+ALTER TABLE photos ADD CONSTRAINT FK_id_photos FOREIGN KEY (id) REFERENCES restaurants(id);

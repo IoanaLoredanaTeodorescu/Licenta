@@ -1,5 +1,4 @@
-import _ from "lodash";
-import React, {Component} from "react";
+import React from "react";
 import {
     withGoogleMap,
     GoogleMap,
@@ -26,15 +25,15 @@ function returnInfo(props, marker) {
         return (
             <InfoWindow className='info-wrapper' onCloseClick={() => props.closeInfoWindowFromX(marker.id)}>
               <div className='info-box'>
-                  <span className='name-of-restaurant-all'>
+                  <span className='name-of-restaurant-all' onClick={() => props.handleClickOnInfoBox(marker.id)}>
                       {marker.name}
                   </span>
                   <span className='raiting'>
                     <Rating
-                        placeholderRate={marker.raiting}
-                        empty={<img src={LogoImgEmpty} className="icon-review"/>}
-                        placeholder={<img src={LogoImgFull} className="icon-review" />}
-                        full={<img src={LogoImgFull} className="icon-review" />}
+                        placeholderRate={parseFloat(marker.raiting)}
+                        empty={<img src={LogoImgEmpty} alt='logo' className="icon-review"/>}
+                        placeholder={<img src={LogoImgFull} alt='logo' className="icon-review" />}
+                        full={<img src={LogoImgFull} alt='logo' className="icon-review" />}
                         readonly
                     />
                     <span className='text-review'>{marker.raiting} puncte</span>

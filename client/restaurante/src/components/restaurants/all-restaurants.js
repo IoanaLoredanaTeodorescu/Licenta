@@ -1,18 +1,23 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Restaurant from './restaurant';
 
-export default function AllRestaurants({restaurants, onClickName, onClickTag, type}) {
-	return (
-		<div className='restaurants-wrapper'>
-		{
-			restaurants.map( item => {
-				item.defaultAnimation = 2;
-				item = [].concat(item);
-				return (
-					<Restaurant key={item.id} restaurant={item} type={type} onClickName={onClickName} onClickTag={onClickTag}/>
-				);
-			})
-		}
-		</div>
-	);
+class AllRestaurants extends Component {
+	render() {
+		let k = 0;
+		return (
+			<div className='restaurants-wrapper'>
+			{
+				this.props.restaurants.map( item => {
+					item.defaultAnimation = 2;
+					item = [].concat(item);
+					return (
+						<Restaurant key={k++} restaurant={item} type={this.props.type} onClickName={this.props.onClickName} onClickTag={this.props.onClickTag}/>
+					);
+				})
+			}
+			</div>
+		);
+	}
 }
+
+export default AllRestaurants;

@@ -305,10 +305,6 @@ html {
         display: flex;
         flex-direction: row;
         justify-content: flex-start; }
-        .restaurants-wrapper .restaurant .tags-wrapper .tags.expanded {
-          transition: width 2s; }
-        .restaurants-wrapper .restaurant .tags-wrapper .tags.collapsed {
-          transition: width 2s; }
         .restaurants-wrapper .restaurant .tags-wrapper .tags .tag {
           background-color: #945C43;
           border-radius: 10px;
@@ -345,7 +341,7 @@ html {
   content: "";
   position: absolute;
   bottom: 100%;
-  left: 30%;
+  left: 28%;
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
@@ -380,7 +376,11 @@ html {
     font-weight: bold; }
   .info-box .name-of-restaurant-all {
     font-size: 16px;
-    font-weight: bold; }
+    font-weight: bold;
+    cursor: pointer; }
+  .info-box .name-of-restaurant-all:hover {
+    color: #82B1FF;
+    text-decoration: underline; }
   .info-box .raiting {
     display: flex;
     flex-direction: row;

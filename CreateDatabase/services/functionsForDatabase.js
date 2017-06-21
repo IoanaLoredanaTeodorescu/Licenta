@@ -3,12 +3,6 @@ var id = null;
 
 var mysql = require('mysql');
 
-var reviews = [];
-
-var searchIfExists = (stringToSearch, stringWhereToSearch) => {
-	return stringWhereToSearch.indexOf(stringToSearch);
-}
-
 function connectionEnd(conn, id) {
 	conn.end((err) => {
 		if(err) {
@@ -45,126 +39,38 @@ module.exports = {
 		let name = restaurant.name || '';
 		let opening_hours = restaurant.opening_hours ? restaurant.opening_hours.weekday_text : '';
 		let photos = restaurant.photos || '';
-		reviews = reviews.concat({id: id, reviews: restaurant.reviews || ''});
+		let reviews = restaurant.reviews || '';
 		let tags = restaurant.types || '';
 		let reference = restaurant.reference || '';
-
-		var photo_arr = [];
-
-		for(var j = 0; j < photos.length; j++) {
-			photo_arr.concat(photos[j].photo_reference);
-		}
-
-		var photos_string = photo_arr.toString();
-
-		//console.log(address);
-		// console.log(phone);
-		// console.log(id);
-		// console.log(lat);
-		// console.log(lng);
-		// console.log(name);
-		// console.log(opening_hours);
-		// console.log(photos);
-		// console.log(reviews);
-		// console.log(tags);
-		// console.log(reference);
+		let rating = restaurant.rating || '';
 
 		let existingText = fs.readFileSync('./scripts/insert_datas_into_restaurant.sql').toString();
 
-
 		if(existingText.indexOf(id) < 0) {
-			var stringForInsert = 'INSERT INTO restaurants(id, name, address, lat, lng, tags, phone, opening_hours, reference) VALUES(\"'+id+'\",\"'+name+'\",\"'+address+'\",\"'+lat+'\",\"'+lng+'\",\"';
-
-			//stringForInsert += tags.slice(0,-2) + '\",\"' + phone + '\",\"' + opening_hours + '\",\"' + reference + '\",\"' + photos_string + '\");\n';
-			stringForInsert += tags.slice(0,-2) + '\",\"' + phone + '\",\"' + opening_hours + '\",\"' + reference + '\");\n';
-
+			var stringForInsert = 'INSERT INTO restaurants(id, name, address, lat, lng, tags, phone, opening_hours, reference, rating) VALUES(\"'+id+'\",\"'+name+'\",\"'+address+'\",\"'+lat+'\",\"'+lng+'\",\"';
+			stringForInsert += tags.slice(0,-2) + '\",\"' + phone + '\",\"' + opening_hours + '\",\"' + reference + '\",\"' + rating + '\");\n';
 			fs.appendFileSync('./scripts/insert_datas_into_restaurant.sql', stringForInsert);
+
+			for(var j = 0; j < reviews.length; j++) {
+				let author_name = reviews[j].author_name;
+				let profile_photo_url = reviews[j].profile_photo_url;
+				let rating = reviews[j].rating;
+				let relative_time_description = reviews[j].relative_time_description;
+				let message = reviews[j].text;
+				message = message.replace(/"/g, '\\"');
+
+				var stringForInsertReviews = 'INSERT INTO reviews VALUES(\"' + id + '\",\"' + author_name + '\",\"' + profile_photo_url + '\",\"' + rating + '\",\"' + relative_time_description + '\",\"' + message + '\");\n';
+				fs.appendFileSync('./scripts/insert_datas_into_reviews.sql', stringForInsertReviews);
+			}
+
+			for(var j = 0; j < photos.length; j++) {
+				var html_attributions = photos[j].html_attributions.toString().split(">")[0].split("=")[1];
+				var photo_reference = photos[j].photo_reference;
+
+				var stringForInsertPhotos = 'INSERT INTO photos VALUES(\"' + id + '\",' + html_attributions + ',\"' + photo_reference + '\");\n';
+				fs.appendFileSync('./scripts/insert_datas_into_photos.sql', stringForInsertPhotos);
+			}
 		}
 
-	},
-
-	createTableReviewForEachRestaurant: () => {
-
-		var connection = mysql.createConnection({
-										  	host: "localhost",
-										 	user: "root",
-										 	password: "",
-										  	database: "restaurants",
-										  	debug: false,
-    										multipleStatements: true
-										});
-		connection.connect((err) => {
-			if(err) {
-				console.log('Error connecting to database! \nExecution stopped! \n' + 'Error message: ' + err.message);
-				process.exit();
-			}
-			id = connection.threadId;
-			console.log('Connection established!\nConnected with id: ' + id);
-		});
-
-		connection.query('SELECT id FROM restaurants', (err, result) => {
-			var results = null;
-		    if(err) {
-				console.log('Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message);
-				res.json({typeError: 'DBselect', text: 'Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message});
-				connectionEnd(connection, id);
-		    } else {
-				fs.writeFileSync('./scripts/create_restaurants_tables_reviews.sql', '');
-				for(var j = 0; j < result.length; j++){
-					var name = result[j].id;
-					var script = 'CREATE OR REPLACE TABLE idrestaurant_' + name + ' (user VARCHAR(50), review VARCHAR(500), relative_time_description VARCHAR(50), profile_photo_url VARCHAR(200), rating VARCHAR(4));\n';
-					fs.appendFileSync('./scripts/create_restaurants_tables_reviews.sql', script);
-				}
-				connectionEnd(connection, id);
-		    }
-		});
-	},
-
-	insertDataInEachTableReview: () => {
-
-		var connection = mysql.createConnection({
-										  	host: "localhost",
-										 	user: "root",
-										 	password: "",
-										  	database: "restaurants",
-										  	debug: false,
-    										multipleStatements: true
-										});
-		connection.connect((err) => {
-			if(err) {
-				console.log('Error connecting to database! \nExecution stopped! \n' + 'Error message: ' + err.message);
-				process.exit();
-			}
-			id = connection.threadId;
-			console.log('Connection established!\nConnected with id: ' + id);
-		});
-
-		connection.query('SELECT id FROM restaurants', (err, result) => {
-			var results = null;
-		    if(err) {
-				console.log('Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message);
-				res.json({typeError: 'DBselect', text: 'Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message});
-				connectionEnd(connection, id);
-		    } else {
-				fs.writeFileSync('./scripts/create_restaurants_tables.sql', '');
-				for(var j = 0; j < result.length; j++){
-					var name = result[j].id;
-					var script = 'CREATE OR REPLACE TABLE idrestaurant_' + name + ' (user VARCHAR(50), review VARCHAR(500), relative_time_description VARCHAR(50), profile_photo_url VARCHAR(200), rating VARCHAR(4));\n';
-					fs.appendFileSync('./scripts/create_restaurants_tables.sql', script);
-				}
-				connectionEnd(connection, id);
-		    }
-		});
 	}
-}
-
-
-
-
-var replaceDiacritics = (stringWhereToSearch) => {
-		if(stringWhereToSearch.indexOf('Ș') > -1) {
-			stringWhereToSearch.replace('Ș','kkkk');
-		}
-		console.log(stringWhereToSearch);
-	return stringWhereToSearch;
 }

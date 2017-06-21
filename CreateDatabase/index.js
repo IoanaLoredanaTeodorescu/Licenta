@@ -14,6 +14,8 @@ request('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=4
 	if (!error && response.statusCode === 200) {
     	restaurants = restaurants.concat(functionsForDatabase.getRestaurantsReference(response.body));
 		fs.writeFileSync('./scripts/insert_datas_into_restaurant.sql', '');
+		fs.writeFileSync('./scripts/insert_datas_into_reviews.sql', '');
+		fs.writeFileSync('./scripts/insert_datas_into_photos.sql', '');
 		if(restaurants.length > 0) {
 			for(var i = 0; i < restaurants.length; i++) {
 				let link = 'https://maps.googleapis.com/maps/api/place/details/json?reference=' + restaurants[i].reference + '&sensor=true&key=AIzaSyAcazHnIcfjOfoG6Z3TkUZ-Cw5J_KvmTLo';
@@ -37,10 +39,7 @@ request('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=4
 
 
 setTimeout(() => {initDatabase.initDatabase()}, 3000);
- // setTimeout(() => {functionsForDatabase.createTableReviewForEachRestaurant()}, 3000);
- // setTimeout(() => {initDatabase.createTableReviewForEachRestaurant()}, 3000);
-// functionsForDatabase.createTableReviewForEachRestaurant();
-// initDatabase.createTableReviewForEachRestaurant();
+//setTimeout(() => {initDatabase.insertDataIntoReviews()}, 3000);
 
 
 module.exports = app;

@@ -97,7 +97,6 @@ class SignupForm extends Component {
 		switch (this.props.typeOfButton) {
 			case 'signup':
 				if(fullNameError === '' && emailError === '' && passwordError === '' && rePasswordError === ''){
-					let body = {fullNameValue, emailValue, passwordValue};
 					return fetch('/signup', {method: 'POST',
 						body: JSON.stringify({fullName: fullNameValue, email: emailValue, password: passwordValue}),
 						headers: {"Content-Type": "application/json"}})

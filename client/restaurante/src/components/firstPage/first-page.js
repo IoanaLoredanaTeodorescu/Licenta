@@ -27,6 +27,7 @@ class FirstPage extends Component {
         this.handleClickTag = this.handleClickTag.bind(this);
         this.handleButtonClicked = this.handleButtonClicked.bind(this);
         this.setUserData = this.setUserData.bind(this);
+        this.handleClickOnInfoBox = this.handleClickOnInfoBox.bind(this);
     }
 
     changeTab(id) {
@@ -61,18 +62,31 @@ class FirstPage extends Component {
     handleClickName(id) {
         this.setState({
             showOneRestaurant: true,
-            idRestaurantShowed: id,
-            tagRestaurant: ''
+            idRestaurantShowed: id
         });
     }
 
     handleClickTag(tag) {
-        this.setState({
-            showOneRestaurant: false,
-            tagRestaurant: tag,
-            idRestaurantShowed: ''
-        });
         console.log(tag)
+        fetch('/tag/'+tag, {method: 'GET'})
+        .then(response => {
+            if(typeof response === 'object') {
+                return response.json();
+            }
+        })
+        .then(resp => {
+            if(resp.message && typeof resp.message === 'object') {
+                this.setState({restaurants: this.state.restaurants.concat(resp.message)});
+                //console.log(resp.message);
+            } else {
+                if(resp.message) {
+                    console.log(resp.message);
+                }
+            }
+        })
+        .catch(e => {
+            console.error('Error->', e);
+        });
     }
 
     handleButtonClicked() {
@@ -83,33 +97,40 @@ class FirstPage extends Component {
         this.setState({userData: userData});
     }
 
+    handleClickOnInfoBox(id) {
+        this.setState({
+            showOneRestaurant: true,
+            idRestaurantShowed: id
+        });
+    }
 
     getSelectedTabView(id) {
 		switch(id){
 			case 'all-restaurants':
-                if(this.state.showOneRestaurant === false && this.state.tagRestaurant === '')
-                    return (<AllRestaurants type='just-info' restaurants={this.state.restaurants} onClickName={this.handleClickName} onClickTag={this.handleClickTag}/>);
-                else
-                    if(this.state.idRestaurantShowed !== '')
+                if(this.state.showOneRestaurant === false && this.state.tagRestaurant === '') {
+                        return (<AllRestaurants type='just-info' restaurants={this.state.restaurants} onClickName={this.handleClickName} onClickTag={this.handleClickTag}/>);
+                } else if(this.state.showOneRestaurant === true && this.state.idRestaurantShowed !== '') {
                         return (<RestaurantAllView type='just-info' buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
-                    else
-                        if(this.state.tagRestaurant !== '')
-                            return ;
-			case 'map-logged-false':
-				return (<RestaurantsMap type='just-info-with-click' restaurants={this.state.restaurants} />);
-			case 'login':
+                    }
+                break;
+            case 'map-logged-false':
+                if(this.state.showOneRestaurant === true && this.state.idRestaurantShowed !== '') {
+                    return (<RestaurantAllView type='just-info' buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
+                } else return (<RestaurantsMap type='just-info-with-click' handleClickOnInfoBox={this.handleClickOnInfoBox} restaurants={this.state.restaurants} />);
+            case 'login':
 				return (<Autentificare loginCallback={this.props.isLogged} userData={this.setUserData} redirect={this.changeTab.bind(this, 'my-restaurants')}/>);
-			case 'signup':
+            case 'signup':
 				return (<Inregistrare buttonName='Înregistrare' typeOfButton='signup' redirectToLogin={this.changeTab.bind(this, 'login')} />);
             case 'my-restaurants':
                 return (<div>restaurantele mele</div>);
             case 'map-logged-true':
                 return (<div>harta mea</div>);
             default:
-                if(this.state.showOneRestaurant === false)
-                    return (<AllRestaurants type='just-info' restaurants={this.state.restaurants} onClickName={this.handleClickName} onClickTag={this.handleClickTag}/>);
-                else
-                    return (<RestaurantAllView type='just-info' buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
+                if(this.state.showOneRestaurant === false && this.state.tagRestaurant === '') {
+                        return (<AllRestaurants type='just-info' restaurants={this.state.restaurants} onClickName={this.handleClickName} onClickTag={this.handleClickTag}/>);
+                } else if(this.state.showOneRestaurant === true && this.state.idRestaurantShowed !== '') {
+                        return (<RestaurantAllView type='just-info' buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
+                    }
 		}
 	}
 
@@ -117,10 +138,8 @@ class FirstPage extends Component {
         switch (logged) {
             case false:
                 return Constants.firstPageTabs;
-                break;
             case true:
                 return Constants.firstPageLoggedTabs;
-                break
             default:
                 return Constants.firstPageTabs;
         }

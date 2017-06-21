@@ -25,7 +25,7 @@ class Restaurant extends Component {
                 if(input !== '') {
                     return (
                         <div className='phone-wrapper'>
-                            <img src={LogoImgTelephone} className='add-padding'/>
+                            <img src={LogoImgTelephone} alt='logo' className='add-padding'/>
                             <span className='telephone'>{input}</span>
                         </div>
                     );
@@ -33,16 +33,19 @@ class Restaurant extends Component {
                 break;
             case 'address':
                 if(input !== '') {
+                    input = input.split(",");
+                    input = input.slice(0, -2);
+                    let k = 0;
                     return (
                         <div className='address-wrapper'>
-                            <img src={LogoImgAddress} className='add-padding'/>
+                            <img src={LogoImgAddress} alt='logo' className='add-padding'/>
                             <div className='address'>
                                 <span className='strada'>{input[0]}</span>
                                 {
                                     input.map(item => {
-                                        if(item !== input[0] && item !== input[input.length-1]) {
+                                        if(item !== input[0]) {
                                             return (
-                                                <span className='rest-address'>, {item}</span>
+                                                <span key={k++} className='rest-address'>, {item}</span>
                                             );
                                         }
                                     })
@@ -53,18 +56,19 @@ class Restaurant extends Component {
                 }
                 break;
             case 'opening_hours':
+                let k = 0;
                 if(input !== '') {
                     return (
                         <div className='opening-wrapper tooltip'>
-                            <img src={LogoImgOpening} className='add-padding'/>
+                            <img src={LogoImgOpening} alt='logo' className='add-padding'/>
                             <div className='opening tooltiptext'>
                                 {
                                     input.split(",").map(item => {
                                         let arr = item.split("y:");
                                         return (
-                                            <div className='day'>
-                                                <span className='day-name'>{arr[0]+'y:'}</span>
-                                                <span className='day-program'>{arr[1]}</span>
+                                            <div key={k++} className='day'>
+                                                <span key={k++} className='day-name'>{arr[0]+'y:'}</span>
+                                                <span key={k++} className='day-program'>{arr[1]}</span>
                                             </div>
                                         );
                                     })
@@ -89,7 +93,7 @@ class Restaurant extends Component {
                     {
                         array_tags.map( item => {
                             return (
-                                <span key={i++} className='tag' onClickTag={() => {this.props.onClickTag('cafe')}}>{item}</span>
+                                <div key={i++} className='tag' onClick={() => {this.props.onClickTag(item)}}>{item}</div>
                             );
                         })
                     }
@@ -109,8 +113,6 @@ class Restaurant extends Component {
     render() {
         let {id, name, raiting, address, tags, lat, lng, phone, opening_hours} = this.props.restaurant[0];
         let array_tags = tags.split(",");
-        let array_address = address.split(",");
-        array_address = array_address.slice(0, -1);
         var i=0;
         return (
             <div key={id} className='restaurant'>
@@ -121,20 +123,20 @@ class Restaurant extends Component {
                     {this.ifNotEmptyReturn(opening_hours, 'opening_hours')}
                     <span className='raiting'>
                         <Rating
-                            placeholderRate={raiting}
-                            empty={<img src={LogoImgEmpty} className="icon"/>}
-                            placeholder={<img src={LogoImgFull} className="icon" />}
-                            full={<img src={LogoImgFull} className="icon" />}
+                            placeholderRate={parseFloat(raiting)}
+                            empty={<img src={LogoImgEmpty} alt='logo' className="icon"/>}
+                            placeholder={<img src={LogoImgFull} alt='logo' className="icon" />}
+                            full={<img src={LogoImgFull} alt='logo' className="icon" />}
                             readonly
                         />
-                        <span className='text-review'>{raiting} puncte</span>
+                        <span className='text-review'>{parseFloat(raiting)} puncte</span>
                     </span>
                 </div>
                 <div className='content-restaurant'>
                     <div className='left-side'>
                         <div className='contact'>
                             {this.ifNotEmptyReturn(phone, 'phone')}
-                            {this.ifNotEmptyReturn(array_address, 'address')}
+                            {this.ifNotEmptyReturn(address, 'address')}
                         </div>
                     </div>
 
