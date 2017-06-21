@@ -79,7 +79,7 @@ table {
     .header .all-header .right-side .top {
       position: absolute;
       width: 65%;
-      min-width: 650px;
+      min-width: 550px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -219,8 +219,7 @@ html {
   margin-top: 50px; }
   .restaurants-wrapper .restaurant {
     background-color: #D4BAA9;
-    min-width: 200px;
-    width: 850px;
+    min-width: 800px;
     padding: 15px;
     margin-bottom: 10px;
     border-radius: 8px; }
@@ -229,8 +228,26 @@ html {
       flex-direction: row;
       justify-content: flex-start;
       align-items: center; }
+      .restaurants-wrapper .restaurant .title-wrapper .opening-wrapper {
+        margin-right: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center; }
+        .restaurants-wrapper .restaurant .title-wrapper .opening-wrapper .day {
+          padding: 3px 0; }
+          .restaurants-wrapper .restaurant .title-wrapper .opening-wrapper .day .day-name {
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; }
+          .restaurants-wrapper .restaurant .title-wrapper .opening-wrapper .day .day-program {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-left: 20px; }
       .restaurants-wrapper .restaurant .title-wrapper .icon {
-        height: 25px;
+        height: 30px;
         opacity: 1; }
       .restaurants-wrapper .restaurant .title-wrapper .raiting {
         display: flex;
@@ -244,37 +261,98 @@ html {
         color: black;
         font-weight: 700;
         font-size: 25px;
-        margin-right: 30px; }
+        margin-right: 10px; }
       .restaurants-wrapper .restaurant .title-wrapper .name-restaurant:hover {
         cursor: pointer;
         text-decoration: underline;
         color: #64B5F6; }
-    .restaurants-wrapper .restaurant .contact {
-      padding: 10px; }
-      .restaurants-wrapper .restaurant .contact .opening-wrapper, .restaurants-wrapper .restaurant .contact .phone-wrapper, .restaurants-wrapper .restaurant .contact .address-wrapper {
+    .restaurants-wrapper .restaurant .content-restaurant {
+      display: flex;
+      flex-direction: row; }
+      .restaurants-wrapper .restaurant .content-restaurant .left-side {
+        width: 50%; }
+        .restaurants-wrapper .restaurant .content-restaurant .left-side .contact {
+          padding: 10px; }
+          .restaurants-wrapper .restaurant .content-restaurant .left-side .contact .phone-wrapper, .restaurants-wrapper .restaurant .content-restaurant .left-side .contact .address-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            margin: 5px; }
+          .restaurants-wrapper .restaurant .content-restaurant .left-side .contact .address-wrapper .strada {
+            font-weight: bold; }
+      .restaurants-wrapper .restaurant .content-restaurant .right-side {
+        width: 50%; }
+        .restaurants-wrapper .restaurant .content-restaurant .right-side .map-restaurant {
+          height: 400px;
+          width: 100%;
+          margin-top: -15px; }
+    .restaurants-wrapper .restaurant .tags-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      height: 50px;
+      left: 20px; }
+      .restaurants-wrapper .restaurant .tags-wrapper .button-tag {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer; }
+      .restaurants-wrapper .restaurant .tags-wrapper .tags {
+        margin-left: 20px;
         display: flex;
         flex-direction: row;
-        justify-content: flex-start;
-        align-items: baseline;
-        margin: 5px; }
-      .restaurants-wrapper .restaurant .contact .address-wrapper .strada {
-        font-weight: bold; }
-      .restaurants-wrapper .restaurant .contact .opening-wrapper .day .day-name {
-        font-weight: bold; }
-    .restaurants-wrapper .restaurant .add-padding {
-      margin-right: 10px;
-      height: 18px; }
-    .restaurants-wrapper .restaurant .tags {
-      margin-left: 20px;
-      margin-top: 20px; }
-      .restaurants-wrapper .restaurant .tags .tag {
-        background-color: #945C43;
-        border-radius: 10px;
-        padding: 5px;
-        margin: 0 5px; }
-      .restaurants-wrapper .restaurant .tags .tag:hover {
-        cursor: pointer;
-        font-style: italic; }
+        justify-content: flex-start; }
+        .restaurants-wrapper .restaurant .tags-wrapper .tags.expanded {
+          transition: width 2s; }
+        .restaurants-wrapper .restaurant .tags-wrapper .tags.collapsed {
+          transition: width 2s; }
+        .restaurants-wrapper .restaurant .tags-wrapper .tags .tag {
+          background-color: #945C43;
+          border-radius: 10px;
+          padding: 5px;
+          margin: 0 5px; }
+        .restaurants-wrapper .restaurant .tags-wrapper .tags .tag:hover {
+          cursor: pointer;
+          font-style: italic; }
+
+.add-padding {
+  margin-right: 10px;
+  height: 20px; }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer; }
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  min-width: 170px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px 15px;
+  position: absolute;
+  z-index: 1;
+  top: 150%;
+  left: 50%;
+  margin-left: -60px; }
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 30%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent; }
+
+.tooltip:hover .tooltiptext {
+  visibility: visible; }
 
 .restaurant-all-view-wrapper {
   background-color: white;
@@ -290,3 +368,25 @@ html {
   width: 100%;
   margin-top: 25px;
   border-radius: 10px; }
+
+.info-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; }
+  .info-box .icon-review {
+    height: 25px; }
+  .info-box .name-of-restaurant {
+    font-size: 14px;
+    font-weight: bold; }
+  .info-box .name-of-restaurant-all {
+    font-size: 16px;
+    font-weight: bold; }
+  .info-box .raiting {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px; }
+    .info-box .raiting .text-review {
+      margin-left: 5px;
+      font-size: 12px; }

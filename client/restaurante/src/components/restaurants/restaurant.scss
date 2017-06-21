@@ -3,8 +3,9 @@
 
     .restaurant {
         background-color: $tan;
-        min-width: 200px;
-        width: 850px;
+        //min-width: 250px;
+        //width: 100%;
+        min-width: 800px;
         padding: 15px;
         margin-bottom: 10px;
         border-radius: 8px;
@@ -15,8 +16,34 @@
             justify-content: flex-start;
             align-items: center;
 
+            .opening-wrapper {
+                margin-right: 20px;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+
+                .day {
+                    padding: 3px 0;
+
+                    .day-name {
+                        font-weight: bold;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
+
+                    .day-program {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        margin-left: 20px;
+                    }
+                }
+            }
+
             .icon {
-                height: 25px;
+                height: 30px;
                 opacity: 1;
             }
 
@@ -36,7 +63,7 @@
                 color: black;
                 font-weight: 700;
                 font-size: 25px;
-                margin-right: 30px;
+                margin-right: 10px;
             }
 
             .name-restaurant:hover {
@@ -45,56 +72,129 @@
                 color: $d;
             }
         }
+        .content-restaurant {
+            display: flex;
+            flex-direction: row;
 
-        .contact {
-            padding: 10px;
+            .left-side {
+                width: 50%;
 
-            .opening-wrapper, .phone-wrapper, .address-wrapper {
+                .contact {
+                    padding: 10px;
+
+                    .phone-wrapper, .address-wrapper {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                        margin: 5px;
+                    }
+
+                    .address-wrapper {
+
+                        .strada {
+                            font-weight: bold;
+                        }
+                    }
+
+                }
+            }
+
+            .right-side {
+                width: 50%;
+
+                .map-restaurant {
+                    height: 400px;
+                    width: 100%;
+                    margin-top: -15px;
+                }
+            }
+        }
+
+        .tags-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            height: 50px;
+            left: 20px;
+
+            .button-tag {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+            }
+
+
+            .tags {
+                margin-left: 20px;
                 display: flex;
                 flex-direction: row;
                 justify-content: flex-start;
-                align-items: baseline;
-                margin: 5px;
-            }
 
-            .address-wrapper {
-
-                .strada {
-                    font-weight: bold;
+                &.expanded {
+                    transition: width 2s;
                 }
-            }
 
-            .opening-wrapper {
-
-                .day {
-
-                    .day-name {
-                        font-weight: bold;
-                    }
+                &.collapsed {
+                    transition: width 2s;
                 }
-            }
-        }
 
-        .add-padding {
-            margin-right: 10px;
-            height: 18px;
-        }
+                .tag {
+                    background-color: $sienna;
+                    border-radius: 10px;
+                    padding: 5px;
+                    margin: 0 5px;
+                }
 
-        .tags {
-            margin-left: 20px;
-            margin-top: 20px;
-
-            .tag {
-                background-color: $sienna;
-                border-radius: 10px;
-                padding: 5px;
-                margin: 0 5px;
-            }
-
-            .tag:hover {
-                cursor: pointer;
-                font-style: italic;
+                .tag:hover {
+                    cursor: pointer;
+                    font-style: italic;
+                }
             }
         }
     }
+}
+
+.add-padding {
+    margin-right: 10px;
+    height: 20px;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    min-width: 170px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px 15px;
+    position: absolute;
+    z-index: 1;
+    top: 150%;
+    left: 50%;
+    margin-left: -60px
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 30%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }

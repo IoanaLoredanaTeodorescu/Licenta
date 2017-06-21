@@ -1,0 +1,27 @@
+.map {
+  height: 100%;
+  width: 100%;
+  margin-top: 25px;
+  border-radius: 10px; }
+
+.info-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; }
+  .info-box .icon-review {
+    height: 25px; }
+  .info-box .name-of-restaurant {
+    font-size: 14px;
+    font-weight: bold; }
+  .info-box .name-of-restaurant-all {
+    font-size: 16px;
+    font-weight: bold; }
+  .info-box .raiting {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px; }
+    .info-box .raiting .text-review {
+      margin-left: 5px;
+      font-size: 12px; }

@@ -11,8 +11,12 @@ import LogoImgFull from '../../assets/graphic/ustensil.png';
 class Restaurant extends Component {
     constructor(props){
     	super(props);
-    	this.state = {};
+    	this.state = {
+            tagBarVisible: false
+        };
         this.ifNotEmptyReturn = this.ifNotEmptyReturn.bind(this);
+        this.handleClickButonTag = this.handleClickButonTag.bind(this);
+        this.renderTagsBar = this.renderTagsBar.bind(this);
     }
 
     ifNotEmptyReturn(input, name) {
@@ -36,7 +40,7 @@ class Restaurant extends Component {
                                 <span className='strada'>{input[0]}</span>
                                 {
                                     input.map(item => {
-                                        if(item !== input) {
+                                        if(item !== input[0] && item !== input[input.length-1]) {
                                             return (
                                                 <span className='rest-address'>, {item}</span>
                                             );
@@ -51,16 +55,15 @@ class Restaurant extends Component {
             case 'opening_hours':
                 if(input !== '') {
                     return (
-                        <div className='opening-wrapper'>
+                        <div className='opening-wrapper tooltip'>
                             <img src={LogoImgOpening} className='add-padding'/>
-                            <div className='opening'>
+                            <div className='opening tooltiptext'>
                                 {
                                     input.split(",").map(item => {
-                                        let arr = item.split("y");
-                                        console.log(arr);
+                                        let arr = item.split("y:");
                                         return (
                                             <div className='day'>
-                                                <span className='day-name'>{arr[0]+'y'}</span>
+                                                <span className='day-name'>{arr[0]+'y:'}</span>
                                                 <span className='day-program'>{arr[1]}</span>
                                             </div>
                                         );
@@ -72,44 +75,16 @@ class Restaurant extends Component {
                 }
                 break;
             default:
-
         }
-
     }
 
-    render() {
-        let {id, name, raiting, address, tags, lat, lng, phone, opening_hours} = this.props.restaurant;
-        let array_tags = tags.split(",");
-        let array_address = address.split(",");
-        var i=0;
-        return (
-            <div key={id} className='restaurant'>
-                <div className='title-wrapper'>
-        			<span className='name-restaurant' onClick={() => {this.props.onClickName(id)}}>
-                        {name}
-                    </span>
-                    <span className='raiting'>
-                        <Rating
-                            placeholderRate={raiting}
-                            empty={<img src={LogoImgEmpty} className="icon"/>}
-                            placeholder={<img src={LogoImgFull} className="icon" />}
-                            full={<img src={LogoImgFull} className="icon" />}
-                            readonly
-                        />
-                        <span className='text-review'>{raiting} points</span>
-                    </span>
-                </div>
+    handleClickButonTag() {
+        this.setState({tagBarVisible: !this.state.tagBarVisible});
+    }
 
-                <div className='contact'>
-                    {this.ifNotEmptyReturn(phone, 'phone')}
-                    {this.ifNotEmptyReturn(array_address, 'address')}
-                    {this.ifNotEmptyReturn(opening_hours, 'opening_hours')}
-                </div>
-
-                <div className='map-restaurant'>
-                    <RestaurantsMap restaurants={this.props.restaurant} />
-                </div>
-
+    renderTagsBar(array_tags, i) {
+        if(this.state.tagBarVisible === true) {
+            return (
                 <div className='tags'>
                     {
                         array_tags.map( item => {
@@ -119,8 +94,61 @@ class Restaurant extends Component {
                         })
                     }
                 </div>
+            );
+        }
+    }
 
+    renderSymbol() {
+        if(this.state.tagBarVisible === false) {
+            return (
+                <span className='button-tag' onClick={this.handleClickButonTag}>&#x226B;<span className=''>Click </span></span>
+            )
+        } else return (<span className='button-tag' onClick={this.handleClickButonTag}>&#x226A;</span>);
+    }
 
+    render() {
+        let {id, name, raiting, address, tags, lat, lng, phone, opening_hours} = this.props.restaurant[0];
+        let array_tags = tags.split(",");
+        let array_address = address.split(",");
+        array_address = array_address.slice(0, -1);
+        var i=0;
+        return (
+            <div key={id} className='restaurant'>
+                <div className='title-wrapper'>
+                    <span className='name-restaurant' onClick={() => {this.props.onClickName(id)}}>
+                        {name}
+                    </span>
+                    {this.ifNotEmptyReturn(opening_hours, 'opening_hours')}
+                    <span className='raiting'>
+                        <Rating
+                            placeholderRate={raiting}
+                            empty={<img src={LogoImgEmpty} className="icon"/>}
+                            placeholder={<img src={LogoImgFull} className="icon" />}
+                            full={<img src={LogoImgFull} className="icon" />}
+                            readonly
+                        />
+                        <span className='text-review'>{raiting} puncte</span>
+                    </span>
+                </div>
+                <div className='content-restaurant'>
+                    <div className='left-side'>
+                        <div className='contact'>
+                            {this.ifNotEmptyReturn(phone, 'phone')}
+                            {this.ifNotEmptyReturn(array_address, 'address')}
+                        </div>
+                    </div>
+
+                    <div className='right-side'>
+                        <div className='map-restaurant'>
+                            <RestaurantsMap type={this.props.type} restaurants={this.props.restaurant} />
+                        </div>
+                    </div>
+                </div>
+
+                <div className='tags-wrapper'>
+                    {this.renderSymbol()}
+                    {this.renderTagsBar(array_tags, i)}
+                </div>
     		</div>
         );
     }

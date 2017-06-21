@@ -46,7 +46,7 @@ class FirstPage extends Component {
         .then(resp => {
             if(resp.message && typeof resp.message === 'object') {
                 this.setState({restaurants: this.state.restaurants.concat(resp.message)});
-                console.log(resp.message);
+                //console.log(resp.message);
             } else {
                 if(resp.message) {
                     console.log(resp.message);
@@ -88,15 +88,15 @@ class FirstPage extends Component {
 		switch(id){
 			case 'all-restaurants':
                 if(this.state.showOneRestaurant === false && this.state.tagRestaurant === '')
-                    return (<AllRestaurants restaurants={this.state.restaurants} onClickName={this.handleClickName} onClickTag={this.handleClickTag}/>);
+                    return (<AllRestaurants type='just-info' restaurants={this.state.restaurants} onClickName={this.handleClickName} onClickTag={this.handleClickTag}/>);
                 else
                     if(this.state.idRestaurantShowed !== '')
-                        return (<RestaurantAllView buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
+                        return (<RestaurantAllView type='just-info' buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
                     else
                         if(this.state.tagRestaurant !== '')
                             return ;
 			case 'map-logged-false':
-				return (<RestaurantsMap restaurants={this.state.restaurants} />);
+				return (<RestaurantsMap type='just-info-with-click' restaurants={this.state.restaurants} />);
 			case 'login':
 				return (<Autentificare loginCallback={this.props.isLogged} userData={this.setUserData} redirect={this.changeTab.bind(this, 'my-restaurants')}/>);
 			case 'signup':
@@ -107,9 +107,9 @@ class FirstPage extends Component {
                 return (<div>harta mea</div>);
             default:
                 if(this.state.showOneRestaurant === false)
-                    return (<AllRestaurants restaurants={this.state.restaurants} onClickName={this.handleClickName} onClickTag={this.handleClickTag}/>);
+                    return (<AllRestaurants type='just-info' restaurants={this.state.restaurants} onClickName={this.handleClickName} onClickTag={this.handleClickTag}/>);
                 else
-                    return (<RestaurantAllView buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
+                    return (<RestaurantAllView type='just-info' buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
 		}
 	}
 

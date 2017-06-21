@@ -4,3 +4,35 @@
     margin-top: 25px;
     border-radius: 10px;
 }
+
+.info-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .icon-review {
+        height: 25px;
+    }
+    .name-of-restaurant {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .name-of-restaurant-all {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .raiting {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 10px;
+
+        .text-review {
+            margin-left: 5px;
+            font-size: 12px;
+        }
+    }
+}
