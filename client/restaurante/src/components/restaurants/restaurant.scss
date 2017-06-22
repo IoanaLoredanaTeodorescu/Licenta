@@ -1,14 +1,19 @@
 .restaurants-wrapper {
     margin-top: 50px;
+    width: 100%;
+    padding: 0 20px;
 
     .restaurant {
         background-color: $tan;
         //min-width: 250px;
         //width: 100%;
-        min-width: 800px;
+        margin: 0 auto;
+        max-width: 800px;
+        width: 100%;
         padding: 15px;
         margin-bottom: 10px;
         border-radius: 8px;
+        box-sizing: border-box;
 
         .title-wrapper {
             display: flex;
@@ -82,7 +87,7 @@
                 .contact {
                     padding: 10px;
 
-                    .phone-wrapper, .address-wrapper {
+                    .phone-wrapper, .address-wrapper, .website-wrapper{
                         display: flex;
                         flex-direction: row;
                         justify-content: flex-start;
@@ -148,7 +153,72 @@
                 }
             }
         }
+
+        .add-review-button-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+
+            .add-review-button {
+                color: white;
+                font-size: 25px;
+                font-weight: bold;
+                background-color: $sienna;
+                border: 2px solid grey;
+                border-radius: 50%;
+                height: 30px;
+                width: 30px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                .text-tolltip-add-review {
+                    font-size: 16px;
+                }
+            }
+
+            .add-review-button:hover {
+                cursor: pointer;
+            }
+        }
     }
+}
+
+.tooltip-add-review {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip-add-review .tooltiptext-add-review {
+    visibility: hidden;
+    width: 150px;
+    background-color: black;
+    opacity: 0.7;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    right: 110%;
+}
+
+.tooltip-add-review .tooltiptext-add-review::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent black;
+}
+.tooltip-add-review:hover .tooltiptext-add-review {
+    visibility: visible;
 }
 
 .add-padding {

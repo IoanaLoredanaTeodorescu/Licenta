@@ -12,6 +12,7 @@ CREATE OR REPLACE TABLE restaurants (
 	opening_hours VARCHAR(300),
 	reference VARCHAR(500),
 	rating VARCHAR(4),
+	website VARCHAR(500),
 	PRIMARY KEY(id)
 );
 

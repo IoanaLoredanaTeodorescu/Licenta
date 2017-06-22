@@ -1,0 +1,41 @@
+.add-review-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: rgba(255, 255, 255, 0.5);
+    height: auto;
+    width: 100%;
+    border: 2px solid grey;
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+
+    .rating-review {
+        margin: 10px;
+    }
+
+    .review-textarea {
+        height: 100px;
+        width: 100%;
+        border: px solid grey;
+        border-radius: 5px;
+        padding: 5px;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+    }
+
+    .buton-add-review-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+
+        .buton-add-review {
+            height: 50px;
+            width: 100px;
+        }
+    }
+
+    textarea {
+        resize: none;
+    }
+}

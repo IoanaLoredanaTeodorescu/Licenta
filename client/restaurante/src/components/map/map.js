@@ -19,6 +19,7 @@ export default class RestaurantsMap extends Component {
 
     componentDidMount() {
         let restaurants = this.props.restaurants;
+        console.log(restaurants)
         restaurants.map((item) => {
             item.showInfo=false;
             return item;

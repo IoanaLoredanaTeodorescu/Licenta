@@ -11,7 +11,13 @@ class AllRestaurants extends Component {
 					item.defaultAnimation = 2;
 					item = [].concat(item);
 					return (
-						<Restaurant key={k++} restaurant={item} type={this.props.type} onClickName={this.props.onClickName} onClickTag={this.props.onClickTag}/>
+						<Restaurant key={k++}
+							redirectToLogin={this.props.redirectToLogin}
+							logged={this.props.logged}
+							restaurant={item}
+							type={this.props.type}
+							onClickName={this.props.onClickName}
+							onClickTag={this.props.onClickTag}/>
 					);
 				})
 			}

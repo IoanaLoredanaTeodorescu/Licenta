@@ -15,7 +15,9 @@ html {
 
 .main-page {
     height: 100%;
-    min-width: 850px;
+    max-width: 1600px;
+    width: 100%;
+    margin-bottom: 50px;
 
     .main-page-wrapper {
         height: 80%;
@@ -29,8 +31,10 @@ html {
                 justify-content: center;
     			height: auto;
     			width: 100%;
+                max-width: 1600px;
                 height: 100%;
     			margin: 0 auto;
+                box-sizing: border-box;
     		}
         }
     }

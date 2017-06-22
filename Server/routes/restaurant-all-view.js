@@ -33,8 +33,7 @@ router.get('/:id', function(req, res) {
         console.log('Connection established!\nConnected with id: ' + id);
     });
 
-
-    connection.query('SELECT * FROM reviews WHERE id=' + id +';', (err, result) => {
+    connection.query('SELECT * FROM reviews WHERE id=\"' + id_restaurant +'\";', (err, result) => {
 	    if(err) {
 			console.log('Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message);
 			res.json({typeError: 'DBselect', text: 'Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message});

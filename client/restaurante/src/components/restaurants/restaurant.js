@@ -5,8 +5,9 @@ import Lightbox from 'react-images';
 import LogoImgAddress from '../../assets/graphic/location.png';
 import LogoImgOpening from '../../assets/graphic/opening.png';
 import LogoImgTelephone from '../../assets/graphic/mobile.png';
-import LogoImgEmpty from '../../assets/graphic/ustensil_color.png';
-import LogoImgFull from '../../assets/graphic/ustensil.png';
+import LogoImgWebsite from '../../assets/graphic/website.png';
+import Raiting from '../rating/rating';
+
 
 class Restaurant extends Component {
     constructor(props){
@@ -17,6 +18,7 @@ class Restaurant extends Component {
         this.ifNotEmptyReturn = this.ifNotEmptyReturn.bind(this);
         this.handleClickButonTag = this.handleClickButonTag.bind(this);
         this.renderTagsBar = this.renderTagsBar.bind(this);
+        this.handleClickButonAddReview = this.handleClickButonAddReview.bind(this);
     }
 
     ifNotEmptyReturn(input, name) {
@@ -78,6 +80,17 @@ class Restaurant extends Component {
                     );
                 }
                 break;
+            case 'website':
+                if(input !== '') {
+                    return (
+                        <div className='website-wrapper'>
+                            <img src={LogoImgWebsite} alt='logo' className='add-padding'/>
+                            <div className='website'>
+                                <a href={input} target="_blank">{input}</a>
+                            </div>
+                        </div>
+                    );
+                }
             default:
         }
     }
@@ -110,33 +123,36 @@ class Restaurant extends Component {
         } else return (<span className='button-tag' onClick={this.handleClickButonTag}>&#x226A;</span>);
     }
 
+    handleClickButonAddReview(restaurant, logged) {
+        if(logged === false) {
+            this.props.redirectToLogin();
+        } else this.props.onClickName(restaurant);
+    }
+
+
     render() {
-        let {id, name, raiting, address, tags, lat, lng, phone, opening_hours} = this.props.restaurant[0];
+        let {id, name, raiting, address, tags, lat, lng, phone, opening_hours, website} = this.props.restaurant[0];
         let array_tags = tags.split(",");
+        let rating = raiting === '' ? 0 : raiting;
+        console.log(website)
         var i=0;
         return (
             <div key={id} className='restaurant'>
                 <div className='title-wrapper'>
-                    <span className='name-restaurant' onClick={() => {this.props.onClickName(id)}}>
+                    <span className='name-restaurant' onClick={() => {this.props.onClickName(this.props.restaurant[0])}}>
                         {name}
                     </span>
                     {this.ifNotEmptyReturn(opening_hours, 'opening_hours')}
-                    <span className='raiting'>
-                        <Rating
-                            placeholderRate={parseFloat(raiting)}
-                            empty={<img src={LogoImgEmpty} alt='logo' className="icon"/>}
-                            placeholder={<img src={LogoImgFull} alt='logo' className="icon" />}
-                            full={<img src={LogoImgFull} alt='logo' className="icon" />}
-                            readonly
-                        />
-                        <span className='text-review'>{parseFloat(raiting)} puncte</span>
-                    </span>
+                    <div className='rating-wrapper'>
+                        <Raiting rating={rating}/>
+                    </div>
                 </div>
                 <div className='content-restaurant'>
                     <div className='left-side'>
                         <div className='contact'>
                             {this.ifNotEmptyReturn(phone, 'phone')}
                             {this.ifNotEmptyReturn(address, 'address')}
+                            {this.ifNotEmptyReturn(website, 'website')}
                         </div>
                     </div>
 
@@ -150,6 +166,13 @@ class Restaurant extends Component {
                 <div className='tags-wrapper'>
                     {this.renderSymbol()}
                     {this.renderTagsBar(array_tags, i)}
+                </div>
+
+                <div className='add-review-button-wrapper'>
+                    <div className='add-review-button tooltip-add-review' onClick={() => this.handleClickButonAddReview(this.props.restaurant[0], this.props.logged)}>
+                        &#43;
+                        <span className='text-tolltip-add-review tooltiptext-add-review'>Scrie recenzie</span>
+                    </div>
                 </div>
     		</div>
         );

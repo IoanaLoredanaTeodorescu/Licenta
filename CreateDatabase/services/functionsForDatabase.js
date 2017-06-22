@@ -43,12 +43,13 @@ module.exports = {
 		let tags = restaurant.types || '';
 		let reference = restaurant.reference || '';
 		let rating = restaurant.rating || '';
+		let website = restaurant.website || '';
 
 		let existingText = fs.readFileSync('./scripts/insert_datas_into_restaurant.sql').toString();
 
 		if(existingText.indexOf(id) < 0) {
-			var stringForInsert = 'INSERT INTO restaurants(id, name, address, lat, lng, tags, phone, opening_hours, reference, rating) VALUES(\"'+id+'\",\"'+name+'\",\"'+address+'\",\"'+lat+'\",\"'+lng+'\",\"';
-			stringForInsert += tags.slice(0,-2) + '\",\"' + phone + '\",\"' + opening_hours + '\",\"' + reference + '\",\"' + rating + '\");\n';
+			var stringForInsert = 'INSERT INTO restaurants(id, name, address, lat, lng, tags, phone, opening_hours, reference, rating, website) VALUES(\"'+id+'\",\"'+name+'\",\"'+address+'\",\"'+lat+'\",\"'+lng+'\",\"';
+			stringForInsert += tags.slice(0,-2) + '\",\"' + phone + '\",\"' + opening_hours + '\",\"' + reference + '\",\"' + rating + '\",\"' + website +'\");\n';
 			fs.appendFileSync('./scripts/insert_datas_into_restaurant.sql', stringForInsert);
 
 			for(var j = 0; j < reviews.length; j++) {

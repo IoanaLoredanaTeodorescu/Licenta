@@ -41,58 +41,59 @@ table {
   border-spacing: 0; }
 
 .header .all-header {
-  height: 80px;
+  max-width: 1600px;
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start; }
-  .header .all-header .left-side {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: center; }
+  .header .all-header .left-side-header {
     text-transform: uppercase;
     color: white;
     background-color: #07285e;
-    width: 30%;
+    flex-grow: 3;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
-    padding-right: 20px;
-    padding-left: 20px;
-    min-width: 260px;
+    padding: 20px;
     position: relative; }
-    .header .all-header .left-side .restaurante {
+    .header .all-header .left-side-header .restaurante {
       font-size: 35px;
       font-weight: 700; }
-    .header .all-header .left-side .iasi {
+    .header .all-header .left-side-header .iasi {
       font-size: 20px; }
-  .header .all-header .right-side {
+  .header .all-header .right-side-header {
     height: 100%;
-    width: 70%;
-    min-width: 550px;
+    max-width: 950px;
+    flex-grow: 7;
     display: flex;
-    align-items: flex-end;
-    padding: 0 20px; }
-    .header .all-header .right-side .main {
+    align-items: center;
+    padding: 0 20px;
+    height: 80px; }
+    .header .all-header .right-side-header .main {
       display: flex;
       flex-direction: column;
       justify-content: center; }
-    .header .all-header .right-side .top {
+    .header .all-header .right-side-header .top {
       position: absolute;
       width: 65%;
-      min-width: 550px;
+      max-width: 550px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: flex-end;
       top: 0; }
-      .header .all-header .right-side .top .buttons-logged-true:hover {
+      .header .all-header .right-side-header .top .buttons-logged-true:hover {
         cursor: pointer; }
 
 .tabs-wrapper {
   display: flex;
   width: 100%;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: center;
   font-size: 18px; }
   .tabs-wrapper .tab {
@@ -188,7 +189,9 @@ html {
 
 .main-page {
   height: 100%;
-  min-width: 850px; }
+  max-width: 1600px;
+  width: 100%;
+  margin-bottom: 50px; }
   .main-page .main-page-wrapper {
     height: 80%; }
     .main-page .main-page-wrapper .main-page-content {
@@ -199,8 +202,10 @@ html {
         justify-content: center;
         height: auto;
         width: 100%;
+        max-width: 1600px;
         height: 100%;
-        margin: 0 auto; }
+        margin: 0 auto;
+        box-sizing: border-box; }
 
 .bg {
   position: fixed;
@@ -216,13 +221,18 @@ html {
   background-repeat: no-repeat; }
 
 .restaurants-wrapper {
-  margin-top: 50px; }
+  margin-top: 50px;
+  width: 100%;
+  padding: 0 20px; }
   .restaurants-wrapper .restaurant {
     background-color: #D4BAA9;
-    min-width: 800px;
+    margin: 0 auto;
+    max-width: 800px;
+    width: 100%;
     padding: 15px;
     margin-bottom: 10px;
-    border-radius: 8px; }
+    border-radius: 8px;
+    box-sizing: border-box; }
     .restaurants-wrapper .restaurant .title-wrapper {
       display: flex;
       flex-direction: row;
@@ -273,7 +283,7 @@ html {
         width: 50%; }
         .restaurants-wrapper .restaurant .content-restaurant .left-side .contact {
           padding: 10px; }
-          .restaurants-wrapper .restaurant .content-restaurant .left-side .contact .phone-wrapper, .restaurants-wrapper .restaurant .content-restaurant .left-side .contact .address-wrapper {
+          .restaurants-wrapper .restaurant .content-restaurant .left-side .contact .phone-wrapper, .restaurants-wrapper .restaurant .content-restaurant .left-side .contact .address-wrapper, .restaurants-wrapper .restaurant .content-restaurant .left-side .contact .website-wrapper {
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
@@ -313,6 +323,60 @@ html {
         .restaurants-wrapper .restaurant .tags-wrapper .tags .tag:hover {
           cursor: pointer;
           font-style: italic; }
+    .restaurants-wrapper .restaurant .add-review-button-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center; }
+      .restaurants-wrapper .restaurant .add-review-button-wrapper .add-review-button {
+        color: white;
+        font-size: 25px;
+        font-weight: bold;
+        background-color: #945C43;
+        border: 2px solid grey;
+        border-radius: 50%;
+        height: 30px;
+        width: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; }
+        .restaurants-wrapper .restaurant .add-review-button-wrapper .add-review-button .text-tolltip-add-review {
+          font-size: 16px; }
+      .restaurants-wrapper .restaurant .add-review-button-wrapper .add-review-button:hover {
+        cursor: pointer; }
+
+.tooltip-add-review {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; }
+
+.tooltip-add-review .tooltiptext-add-review {
+  visibility: hidden;
+  width: 150px;
+  background-color: black;
+  opacity: 0.7;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 110%; }
+
+.tooltip-add-review .tooltiptext-add-review::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent black; }
+
+.tooltip-add-review:hover .tooltiptext-add-review {
+  visibility: visible; }
 
 .add-padding {
   margin-right: 10px;
@@ -350,14 +414,71 @@ html {
 .tooltip:hover .tooltiptext {
   visibility: visible; }
 
-.restaurant-all-view-wrapper {
-  background-color: white;
-  width: 80%;
-  height: 200px; }
-  .restaurant-all-view-wrapper .back-button {
-    position: fixed;
-    right: 10px;
-    bottom: 10px; }
+.restaurant-view-all {
+  padding: 0 20px; }
+  .restaurant-view-all .restaurant-all-view-wrapper {
+    background-color: #D4BAA9;
+    margin: 0 auto;
+    max-width: 800px;
+    width: 100%;
+    padding: 15px;
+    margin-top: 50px;
+    border-radius: 8px;
+    box-sizing: border-box; }
+    .restaurant-view-all .restaurant-all-view-wrapper .title-restaurant-view {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      margin-bottom: 15px; }
+      .restaurant-view-all .restaurant-all-view-wrapper .title-restaurant-view .name-restaurant {
+        color: black;
+        font-weight: 700;
+        font-size: 25px;
+        margin-right: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center; }
+      .restaurant-view-all .restaurant-all-view-wrapper .title-restaurant-view .contact-wrapper-view {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start; }
+        .restaurant-view-all .restaurant-all-view-wrapper .title-restaurant-view .contact-wrapper-view .opening-wrapper {
+          margin-left: 5px;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center; }
+          .restaurant-view-all .restaurant-all-view-wrapper .title-restaurant-view .contact-wrapper-view .opening-wrapper .day {
+            padding: 3px 0; }
+            .restaurant-view-all .restaurant-all-view-wrapper .title-restaurant-view .contact-wrapper-view .opening-wrapper .day .day-name {
+              font-weight: bold;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start; }
+            .restaurant-view-all .restaurant-all-view-wrapper .title-restaurant-view .contact-wrapper-view .opening-wrapper .day .day-program {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              margin-left: 20px; }
+        .restaurant-view-all .restaurant-all-view-wrapper .title-restaurant-view .contact-wrapper-view .phone-wrapper, .restaurant-view-all .restaurant-all-view-wrapper .title-restaurant-view .contact-wrapper-view .address-wrapper {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          margin: 0; }
+        .restaurant-view-all .restaurant-all-view-wrapper .title-restaurant-view .contact-wrapper-view .address-wrapper .strada {
+          font-weight: bold; }
+      .restaurant-view-all .restaurant-all-view-wrapper .title-restaurant-view .add-padding {
+        margin-right: 5px; }
+    .restaurant-view-all .restaurant-all-view-wrapper .website-wrapper {
+      margin: 10px 5px; }
+    .restaurant-view-all .restaurant-all-view-wrapper .rating-wrapper {
+      margin-left: 30px; }
+    .restaurant-view-all .restaurant-all-view-wrapper .back-button {
+      position: fixed;
+      right: 10px;
+      bottom: 10px; }
 
 .map {
   height: 100%;
@@ -390,3 +511,81 @@ html {
     .info-box .raiting .text-review {
       margin-left: 5px;
       font-size: 12px; }
+
+.raiting {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center; }
+  .raiting .icon {
+    height: 30px;
+    opacity: 1; }
+  .raiting .text-review {
+    margin-left: 10px;
+    font-style: italic; }
+
+.message-zero-result {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  margin: 15px 0; }
+
+.review {
+  border-radius: 5px;
+  border: 2px solid grey;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-width: 850px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 10px 0; }
+  .review .top-review {
+    margin-bottom: 5px; }
+    .review .top-review .name-of-author {
+      font-size: 18px;
+      font-weight: bold; }
+    .review .top-review .relative-time {
+      margin-left: 10px;
+      margin-top: 5px; }
+  .review .content-review {
+    margin-bottom: 5px; }
+    .review .content-review .raiting-review {
+      margin: 10px; }
+    .review .content-review .icon {
+      height: 20px; }
+
+.add-review-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: rgba(255, 255, 255, 0.5);
+  height: auto;
+  width: 100%;
+  border: 2px solid grey;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box; }
+  .add-review-wrapper .rating-review {
+    margin: 10px; }
+  .add-review-wrapper .review-textarea {
+    height: 100px;
+    width: 100%;
+    border: px solid grey;
+    border-radius: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-bottom: 20px; }
+  .add-review-wrapper .buton-add-review-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end; }
+    .add-review-wrapper .buton-add-review-wrapper .buton-add-review {
+      height: 50px;
+      width: 100px; }
+  .add-review-wrapper textarea {
+    resize: none; }

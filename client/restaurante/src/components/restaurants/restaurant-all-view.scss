@@ -1,11 +1,99 @@
-.restaurant-all-view-wrapper {
-    background-color: white;
-    width: 80%;
-    height: 200px;
+.restaurant-view-all {
+    padding: 0 20px;
 
-    .back-button {
-        position: fixed;
-        right: 10px;
-        bottom: 10px;
+    .restaurant-all-view-wrapper {
+        background-color: $tan;
+        //min-width: 250px;
+        //width: 100%;
+        margin: 0 auto;
+        max-width: 800px;
+        width: 100%;
+        padding: 15px;
+        margin-top: 50px;
+        border-radius: 8px;
+        box-sizing: border-box;
+
+        .title-restaurant-view {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            margin-bottom: 15px;
+
+            .name-restaurant {
+                color: black;
+                font-weight: 700;
+                font-size: 25px;
+                margin-right: 10px;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+            .contact-wrapper-view {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+
+                .opening-wrapper {
+                    margin-left: 5px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+
+                    .day {
+                        padding: 3px 0;
+
+                        .day-name {
+                            font-weight: bold;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                        }
+
+                        .day-program {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            margin-left: 20px;
+                        }
+                    }
+                }
+
+                .phone-wrapper, .address-wrapper {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    margin: 0;
+                }
+
+                .address-wrapper {
+
+                    .strada {
+                        font-weight: bold;
+                    }
+                }
+            }
+
+            .add-padding {
+                margin-right: 5px;
+            }
+        }
+
+        .website-wrapper {
+            margin: 10px 5px;
+        }
+
+        .rating-wrapper {
+            margin-left: 30px;
+        }
+
+        .back-button {
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+        }
     }
 }

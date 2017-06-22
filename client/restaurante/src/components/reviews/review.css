@@ -1,0 +1,34 @@
+.message-zero-result {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  margin: 15px 0; }
+
+.review {
+  border-radius: 5px;
+  border: 2px solid grey;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-width: 850px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 10px 0; }
+  .review .top-review {
+    margin-bottom: 5px; }
+    .review .top-review .name-of-author {
+      font-size: 18px;
+      font-weight: bold; }
+    .review .top-review .relative-time {
+      margin-left: 10px;
+      margin-top: 5px; }
+  .review .content-review {
+    margin-bottom: 5px; }
+    .review .content-review .raiting-review {
+      margin: 10px; }
+    .review .content-review .icon {
+      height: 20px; }

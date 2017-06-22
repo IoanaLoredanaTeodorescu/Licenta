@@ -52,6 +52,7 @@ router.get('/', function(req, res) {
 					 obj.phone = result[i].phone;
 					 obj.opening_hours = result[i].opening_hours;
 					 obj.raiting = result[i].rating;
+					 obj.website = result[i].website;
                      obj_response.push(obj);
                  }
                 res.json({typeError: 'NoError', text: 'All restaurants', message: obj_response});

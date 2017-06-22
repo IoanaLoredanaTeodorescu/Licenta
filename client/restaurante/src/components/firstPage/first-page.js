@@ -19,7 +19,8 @@ class FirstPage extends Component {
             idRestaurantShowed: '',
             userData: {},
             logged: false,
-            tagRestaurant: ''
+            tagRestaurant: '',
+            restaurantToShow: []
         }
         this.changeTab = this.changeTab.bind(this);
         this.getSelectedTabView = this.getSelectedTabView.bind(this);
@@ -59,10 +60,11 @@ class FirstPage extends Component {
         });
     }
 
-    handleClickName(id) {
+    handleClickName(props) {
         this.setState({
             showOneRestaurant: true,
-            idRestaurantShowed: id
+            idRestaurantShowed: props.id,
+            restaurantToShow: props
         });
     }
 
@@ -97,10 +99,11 @@ class FirstPage extends Component {
         this.setState({userData: userData});
     }
 
-    handleClickOnInfoBox(id) {
+    handleClickOnInfoBox(props) {
         this.setState({
             showOneRestaurant: true,
-            idRestaurantShowed: id
+            idRestaurantShowed: props.id,
+            restaurantToShow: props
         });
     }
 
@@ -108,14 +111,14 @@ class FirstPage extends Component {
 		switch(id){
 			case 'all-restaurants':
                 if(this.state.showOneRestaurant === false && this.state.tagRestaurant === '') {
-                        return (<AllRestaurants type='just-info' restaurants={this.state.restaurants} onClickName={this.handleClickName} onClickTag={this.handleClickTag}/>);
+                        return (<AllRestaurants redirectToLogin={this.changeTab.bind(this, 'login')} type='just-info' logged={this.props.logged} restaurants={this.state.restaurants} onClickName={this.handleClickName} onClickTag={this.handleClickTag}/>);
                 } else if(this.state.showOneRestaurant === true && this.state.idRestaurantShowed !== '') {
-                        return (<RestaurantAllView type='just-info' buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
+                        return (<RestaurantAllView type='just-info' logged={this.props.logged} restaurantToShow={this.state.restaurantToShow} buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
                     }
                 break;
             case 'map-logged-false':
                 if(this.state.showOneRestaurant === true && this.state.idRestaurantShowed !== '') {
-                    return (<RestaurantAllView type='just-info' buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
+                    return (<RestaurantAllView type='just-info' logged={this.props.logged} restaurantToShow={this.state.restaurantToShow} buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
                 } else return (<RestaurantsMap type='just-info-with-click' handleClickOnInfoBox={this.handleClickOnInfoBox} restaurants={this.state.restaurants} />);
             case 'login':
 				return (<Autentificare loginCallback={this.props.isLogged} userData={this.setUserData} redirect={this.changeTab.bind(this, 'my-restaurants')}/>);
@@ -127,7 +130,7 @@ class FirstPage extends Component {
                 return (<div>harta mea</div>);
             default:
                 if(this.state.showOneRestaurant === false && this.state.tagRestaurant === '') {
-                        return (<AllRestaurants type='just-info' restaurants={this.state.restaurants} onClickName={this.handleClickName} onClickTag={this.handleClickTag}/>);
+                        return (<AllRestaurants type='just-info' logged={this.props.logged} restaurants={this.state.restaurants} onClickName={this.handleClickName} onClickTag={this.handleClickTag}/>);
                 } else if(this.state.showOneRestaurant === true && this.state.idRestaurantShowed !== '') {
                         return (<RestaurantAllView type='just-info' buttonClicked={this.handleButtonClicked} idRestaurant={this.state.idRestaurantShowed}/>);
                     }
@@ -157,6 +160,7 @@ class FirstPage extends Component {
                         tabs={tabs}
                         selectedTab={this.state.selectedTab}
                         userData={this.state.userData}
+                        isLogged={this.props.isLogged}
                     />
                 </div>
                 <div className='main-page-wrapper'>

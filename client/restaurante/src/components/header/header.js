@@ -23,7 +23,7 @@ class Header extends Component {
     getFullName() {
         let obj = this.props.userData;
         if(getSizeOfObject(obj) > 0) {
-            return obj.fullname;
+            return obj.name;
         }
     }
 
@@ -56,7 +56,7 @@ class Header extends Component {
         //this.getUserData();
         return (
             <div className='all-header'>
-                <div className='left-side'>
+                <div className='left-side-header'>
                     <span className='restaurante'>
                         restaurante
                     </span>
@@ -64,7 +64,7 @@ class Header extends Component {
                         iași
                     </span>
                 </div>
-                <div className='right-side'>
+                <div className='right-side-header'>
                     {this.makeButtonsLogged()}
                     <Tabs
                         callback={this.props.callback}

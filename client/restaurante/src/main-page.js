@@ -13,10 +13,11 @@ class App extends Component {
 
     isLogged() {
         this.setState({logged: !this.state.logged});
+
     }
 
     render () {
-        console.log(this.state)
+        console.log(this.refs)
         return (<FirstPage isLogged={this.isLogged} logged={this.state.logged}/>);
     }
 }

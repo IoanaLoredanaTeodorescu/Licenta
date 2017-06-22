@@ -22,21 +22,25 @@ function returnInfo(props, marker) {
             </InfoWindow>
         );
     } else if(props.type === 'just-info-with-click') {
+        let raiting = marker.raiting;
+        if(raiting === '') {
+            raiting = '0';
+        }
         return (
             <InfoWindow className='info-wrapper' onCloseClick={() => props.closeInfoWindowFromX(marker.id)}>
               <div className='info-box'>
-                  <span className='name-of-restaurant-all' onClick={() => props.handleClickOnInfoBox(marker.id)}>
+                  <span className='name-of-restaurant-all' onClick={() => props.handleClickOnInfoBox(marker)}>
                       {marker.name}
                   </span>
                   <span className='raiting'>
                     <Rating
-                        placeholderRate={parseFloat(marker.raiting)}
+                        placeholderRate={parseFloat(raiting)}
                         empty={<img src={LogoImgEmpty} alt='logo' className="icon-review"/>}
                         placeholder={<img src={LogoImgFull} alt='logo' className="icon-review" />}
                         full={<img src={LogoImgFull} alt='logo' className="icon-review" />}
                         readonly
                     />
-                    <span className='text-review'>{marker.raiting} puncte</span>
+                    <span className='text-review'>{raiting} puncte</span>
                 </span>
               </div>
             </InfoWindow>
