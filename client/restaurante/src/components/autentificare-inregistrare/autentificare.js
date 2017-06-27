@@ -17,8 +17,19 @@ class Autentificare extends Component {
 		this.loginRequest = this.loginRequest.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 		this.changeHandler = this.changeHandler.bind(this);
+		this.loginWhenEnterKey = this.loginWhenEnterKey.bind(this);
+        window.addEventListener("keypress", this.loginWhenEnterKey);
 	}
 
+    componentWillUnmount() {
+        window.removeEventListener("keypress", this.loginWhenEnterKey);
+    }
+
+    loginWhenEnterKey(e) {
+        if(e.keyCode === 13) {
+            this.loginRequest();
+        }
+    }
 
 	async loginRequest() {
 		let {email, password} = this.state;
@@ -42,13 +53,13 @@ class Autentificare extends Component {
                 })
                 .then(resp => {
                     if(resp.typeError === 'NoError') {
+                        this.props.userData(resp.message);
                         this.props.loginCallback();
                         this.props.redirect();
                         this.setState({
                             email: '',
                             password: ''
                         });
-                        this.props.userData(resp.message);
                     } else {
                         if(resp.message) {
                             this.setState({loginError: resp.message});
@@ -115,6 +126,10 @@ class Autentificare extends Component {
 
         				<span className="error">{loginError}</span>
         				<button className="form-button" onClick={this.loginRequest}>Autentificare</button>
+                        <div className='suggest-wrapper'>
+							<span className='sugget-message'>Nu ai cont?</span>
+							<span className='suggest' onClick={() => this.props.redirectToSignup()}>Înregistrare</span>
+						</div>
         			</div>
                 </div>
             </div>

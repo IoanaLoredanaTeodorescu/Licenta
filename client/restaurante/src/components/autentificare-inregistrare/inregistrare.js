@@ -45,7 +45,19 @@ class SignupForm extends Component {
 		this.passwordValidation = this.passwordValidation.bind(this);
 		this.rePasswordValidation = this.rePasswordValidation.bind(this);
 		this.handleClick = this.handleClick.bind(this);
+		this.signupWhenEnterKey = this.signupWhenEnterKey.bind(this);
+		window.addEventListener("keypress", this.signupWhenEnterKey);
 	}
+
+		componentWillUnmount() {
+			window.removeEventListener("keypress", this.signupWhenEnterKey);
+		}
+
+		signupWhenEnterKey(e) {
+			if(e.keyCode === 13) {
+				this.signUpRequest();
+			}
+		}
 
 	// componentWillMount() {
 	// 	if(this.props.formData){
@@ -307,7 +319,7 @@ class SignupForm extends Component {
 						<input
 							id='rePasswordValue'
 							type='password'
-							placeholder='Copiază parola...'
+							placeholder='Rescrie parola...'
 							value={this.state.rePasswordValue}
 							onChange={this.changeHandler}
 							className={rePasswordError ? 'error-input' : ''}
@@ -320,6 +332,10 @@ class SignupForm extends Component {
 								onClick={this.signUpRequest}>
 									{this.props.buttonName}
 						</button>
+						<div className='suggest-wrapper'>
+							<span className='sugget-message'>Ai deja cont?</span>
+							<span className='suggest' onClick={() => this.props.redirectToLogin()}>Autentificare</span>
+						</div>
 					</div>
 				</div>
 			</div>

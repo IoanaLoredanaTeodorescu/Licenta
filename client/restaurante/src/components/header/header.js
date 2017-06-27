@@ -21,9 +21,13 @@ class Header extends Component {
     // }
 
     getFullName() {
-        let obj = this.props.userData;
-        if(getSizeOfObject(obj) > 0) {
-            return obj.name;
+        // let obj = this.props.userData;
+        // if(getSizeOfObject(obj) > 0) {
+        //     return obj.name;
+        // }
+        let name = this.props.userData;
+        if(name !== '') {
+            return name;
         }
     }
 
@@ -33,22 +37,27 @@ class Header extends Component {
 
     handleClickLogout() {
         console.log('clicked logout');
+        this.props.isLogged();
+        this.props.setEmptyEmail();
+        this.props.redirectToAllRestaurants();
     }
 
     makeButtonsLogged() {
-        let obj = this.props.userData;
-        if(getSizeOfObject(obj) > 0) {
-            return (
-                <div className='top'>
-                    <div className='title-logged-true'>
-                        Salut {this.getFullName()} !
+        if(this.props.logged === true) {
+            let obj = this.props.userData;
+            if(getSizeOfObject(obj) > 0) {
+                return (
+                    <div className='top'>
+                        <div className='title-logged-true'>
+                            Salut {this.getFullName()} !
+                        </div>
+                        <div className='buttons-logged-true'>
+                            <span onClick={this.handleClickMyProfile}>Profilul meu</span>
+                            <span onClick={this.handleClickLogout}>Logout</span>
+                        </div>
                     </div>
-                    <div className='buttons-logged-true'>
-                        <span onClick={this.handleClickMyProfile}>Profilul meu</span>
-                        <span onClick={this.handleClickLogout}>Logout</span>
-                    </div>
-                </div>
-            );
+                );
+            }
         }
     }
 

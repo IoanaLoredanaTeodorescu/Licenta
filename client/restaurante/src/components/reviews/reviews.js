@@ -4,7 +4,32 @@ import Review from './review';
 class Reviews extends Component {
     constructor(props){
     	super(props);
+        this.state = {
+            myReviewsRestaurants: []
+        }
         this.showMessageZeroRezults = this.showMessageZeroRezults.bind(this);
+    }
+
+    componentWillMount() {
+        fetch('/my-reviews/' + this.props.emailLogged, {method: 'GET'})
+            .then(res => {
+                if(typeof res === 'object') {
+                    return res.json();
+                }
+            })
+            .then(resp => {
+                if(resp.typeError === 'NoError') {
+                    console.log(resp.message);
+                    this.setState({myReviewsRestaurants: resp.message});
+                } else {
+                    if(resp.message) {
+                        console.log(resp.message);
+                    }
+                }
+            })
+            .catch(e => {
+                console.error('Error->', e);
+        });
     }
 
     showMessageZeroRezults(restaurantReviews) {
@@ -16,7 +41,6 @@ class Reviews extends Component {
                 <div className='reviews'>
                     {
                         restaurantReviews.map(review => {
-                            console.log(review);
                             return (
                                 <Review key={k++} review={review}/>
                             );
@@ -28,7 +52,7 @@ class Reviews extends Component {
     }
 
     render() {
-        let restaurantReviews = this.props.restaurantReviews;
+        let restaurantReviews = this.props.restaurantReviews ? this.props.restaurantReviews : this.state.myReviewsRestaurants;
         return (
             <div>
                 {this.showMessageZeroRezults(restaurantReviews)}

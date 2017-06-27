@@ -45,12 +45,11 @@ router.get('/:id', function(req, res) {
                  obj.author_name = result[i].author_name;
                  obj.profile_photo_url = result[i].profile_photo_url;
                  obj.rating = result[i].rating;
-                 obj.relative_time_description = result[i].relative_time_description;
+                 obj.time = result[i].time;
                  obj.message = result[i].message;
                  obj_response.push(obj);
 
              }
-			 console.log(obj_response)
             res.json({typeError: 'NoError', text: 'All restaurants', message: obj_response});
             connectionEnd(connection, id);
 	    }

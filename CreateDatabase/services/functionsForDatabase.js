@@ -1,7 +1,19 @@
 var fs = require('fs');
+
 var id = null;
 
 var mysql = require('mysql');
+var translateText = require('./translate-text.js');
+
+const Translate = require('@google-cloud/translate');
+
+// Your Google Cloud Platform project ID
+const projectId = 'licentajusttest';
+
+// Instantiates a client
+const translateClient = Translate({
+  projectId: projectId
+});
 
 function connectionEnd(conn, id) {
 	conn.end((err) => {
@@ -12,6 +24,8 @@ function connectionEnd(conn, id) {
 		console.log('Connection with id: ' + id + ' disconected!');
 	});
 }
+
+
 module.exports = {
 	getRestaurantsReference: (res) => {
 		let obj = JSON.parse(res);
@@ -56,12 +70,43 @@ module.exports = {
 				let author_name = reviews[j].author_name;
 				let profile_photo_url = reviews[j].profile_photo_url;
 				let rating = reviews[j].rating;
-				let relative_time_description = reviews[j].relative_time_description;
+				let time = reviews[j].time;
 				let message = reviews[j].text;
+
 				message = message.replace(/"/g, '\\"');
 
-				var stringForInsertReviews = 'INSERT INTO reviews VALUES(\"' + id + '\",\"' + author_name + '\",\"' + profile_photo_url + '\",\"' + rating + '\",\"' + relative_time_description + '\",\"' + message + '\");\n';
-				fs.appendFileSync('./scripts/insert_datas_into_reviews.sql', stringForInsertReviews);
+				//aici vreau sa transform mesajul
+				// let test = translateText.translateTextInEn(message, 'en');
+				// console.log("test translate", test);
+
+				let test = translateClient.translate(message, 'en')
+		         .then ((results) => {
+
+		            //translation = results[0];
+		            // console.log(`Text: ${text}`);
+		            // console.log(`Translation: ${translation}`);
+		            return results[1].data.translations[0].translatedText;
+		            //return translation;
+
+		            // var message = results[1].data.translations[0].translatedText;
+		            // return message;
+		          })
+				  .then((result) => {
+                        message = result;
+                        message = message.replace(/"/g, '\\"');
+
+          				let author_email = '';
+
+          				var stringForInsertReviews = 'INSERT INTO reviews VALUES(\"' + id + '\",\"' + author_name + '\",\"' + author_email + '\",\"' + profile_photo_url + '\",\"' + rating + '\",\"' + time + '\",\"' + message + '\");\n';
+          				fs.appendFileSync('./scripts/insert_datas_into_reviews.sql', stringForInsertReviews);
+				  })
+		          .catch((err) => {
+		            console.error('ERROR:', err);
+		          });
+
+				//   console.log(test)
+
+
 			}
 
 			for(var j = 0; j < photos.length; j++) {
@@ -74,4 +119,5 @@ module.exports = {
 		}
 
 	}
+
 }

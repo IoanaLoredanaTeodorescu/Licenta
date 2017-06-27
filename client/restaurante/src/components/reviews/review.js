@@ -10,7 +10,7 @@ class Review extends Component {
             <div className='review'>
                 <div className='top-review'>
                     <span className='name-of-author'>{this.props.review.author_name}</span>
-                    <span className='relative-time'>({this.props.review.relative_time_description})</span>
+                    <span className='relative-time'>({new Date(this.props.review.time).toLocaleString()})</span>
                 </div>
                 <div className='content-review'>
                     <div className='raiting-review'>

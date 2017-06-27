@@ -19,9 +19,10 @@ CREATE OR REPLACE TABLE restaurants (
 CREATE OR REPLACE TABLE reviews (
 	id VARCHAR(30),
 	author_name VARCHAR(100),
+	author_email VARCHAR(100),
 	profile_photo_url VARCHAR(500),
 	rating VARCHAR(4),
-	relative_time_description VARCHAR(25),
+	time INTEGER(25),
 	message VARCHAR(600)
 );
 

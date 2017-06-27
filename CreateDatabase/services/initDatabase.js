@@ -5,6 +5,8 @@ var mysql = require('mysql');
 
 var id = null;
 
+var messages = [];
+
 function connectionEnd(conn, id) {
 	conn.end((err) => {
 		if(err) {
@@ -97,5 +99,43 @@ module.exports={
 			console.log('Error inserting datas into photos! \nExecution stopped! \n' + 'Error message: EMPTY STRING' );
 			connectionEnd(connection, id);
 		}
+	},
+
+	getMessages: () => {
+		var connection = mysql.createConnection({
+										  	host: "localhost",
+										 	user: "root",
+										 	password: "",
+										  	database: "restaurants",
+										  	debug: false,
+    										multipleStatements: true
+										});
+		connection.connect((err) => {
+			if(err) {
+				console.log('Error connecting to database! \nExecution stopped! \n' + 'Error message: ' + err.message);
+				process.exit();
+			}
+			id = connection.threadId;
+			console.log('Connection established!\nConnected with id: ' + id);
+		});
+
+
+		connection.query('SELECT message FROM reviews', (err, result) => {
+			if (err) {
+				console.log('Error creating table! \nExecution stopped! \n' + 'Error message: ' + err.message);
+				connectionEnd(connection, id);
+				process.exit();
+			} else {
+				for(var i = 0; i < result.length; i++) {
+					messages.push(result[i].message);
+				}
+				console.log(messages)
+				connectionEnd(connection, id);
+			}
+		});
+	},
+
+	updateDatabase: () => {
+
 	}
 }

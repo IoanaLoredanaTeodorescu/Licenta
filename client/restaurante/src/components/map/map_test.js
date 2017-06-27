@@ -1,118 +1,65 @@
 /* global google */
-import _ from "lodash";
-
 import {
   default as React,
   Component,
 } from "react";
 
-
 import {
-    withGoogleMap,
-    GoogleMap,
-    InfoWindow,
-    Marker
+  withGoogleMap,
+  GoogleMap,
+  DirectionsRenderer,
 } from "react-google-maps";
-/*
- * This is the modify version of:
- * https://developers.google.com/maps/documentation/javascript/examples/event-arguments
- *
- * Add <script src="https://maps.googleapis.com/maps/api/js"></script> to your HTML to provide google.maps reference
- */
-const GettingStartedGoogleMap = withGoogleMap(props => (
+
+const DirectionsExampleGoogleMap = withGoogleMap(props => (
   <GoogleMap
-    ref={props.onMapLoad}
-    defaultZoom={10}
-    defaultCenter={{ lat: 47.1538383,
-    lng: 27.5250888 }}
-    onClick={props.onMapClick}
+    defaultZoom={7}
+    defaultCenter={props.center}
   >
-    {props.markers.map(marker => (
-      <Marker
-        {...marker}
-        onRightClick={() => props.onMarkerRightClick(marker)}
-      />
-    ))}
+    {props.directions && <DirectionsRenderer directions={props.directions} />}
   </GoogleMap>
 ));
 
-export default class GettingStartedExample extends Component {
+/*
+ * Add <script src="https://maps.googleapis.com/maps/api/js"></script> to your HTML to provide google.maps reference
+ */
+export default class DirectionsExample extends Component {
 
   state = {
-    markers: [{
-      position: {
-        lat: 47.1538383,
-        lng: 27.5250888
-      },
-      key: `Taiwan`,
-      defaultAnimation: 2,
-    }],
-  };
-
-  handleMapLoad = this.handleMapLoad.bind(this);
-  handleMapClick = this.handleMapClick.bind(this);
-  handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
-
-  handleMapLoad(map) {
-    this._mapComponent = map;
-    if (map) {
-      console.log(map.getZoom());
-    }
+    origin: new google.maps.LatLng(41.8507300, -87.6512600),
+    destination: new google.maps.LatLng(41.8525800, -87.6514100),
+    directions: null,
   }
 
-  /*
-   * This is called when you click on the map.
-   * Go and try click now.
-   */
-  handleMapClick(event) {
-    // const nextMarkers = [
-    //   ...this.state.markers,
-    //   {
-    //     position: event.latLng,
-    //     defaultAnimation: 2,
-    //     key: Date.now(), // Add a key property for: http://fb.me/react-warning-keys
-    //   },
-    // ];
-    // this.setState({
-    //   markers: nextMarkers,
-    // });
-    //
-    // if (nextMarkers.length === 3) {
-    //   this.props.toast(
-    //     `Right click on the marker to remove it`,
-    //     `Also check the code!`
-    //   );
-    // }
-  }
+  componentDidMount() {
+    const DirectionsService = new google.maps.DirectionsService();
 
-  handleMarkerRightClick(targetMarker) {
-    /*
-     * All you modify is data, and the view is driven by data.
-     * This is so called data-driven-development. (And yes, it's now in
-     * web front end and even with google maps API.)
-     */
-    const nextMarkers = this.state.markers.filter(marker => marker !== targetMarker);
-    this.setState({
-      markers: nextMarkers,
+    DirectionsService.route({
+      origin: this.state.origin,
+      destination: this.state.destination,
+      travelMode: google.maps.TravelMode.DRIVING,
+    }, (result, status) => {
+      if (status === google.maps.DirectionsStatus.OK) {
+        this.setState({
+          directions: result,
+        });
+      } else {
+        console.error(`error fetching directions ${result}`);
+      }
     });
   }
 
   render() {
     return (
-      <div style={{height: `100%`, width: `100%`}}>
-        <GettingStartedGoogleMap
-          containerElement={
-            <div style={{ height: `100%`, width: '100%'}} />
-          }
-          mapElement={
-            <div style={{ height: `100%`, width: '100%' }} />
-          }
-          onMapLoad={this.handleMapLoad}
-          onMapClick={this.handleMapClick}
-          markers={this.state.markers}
-          onMarkerRightClick={this.handleMarkerRightClick}
-        />
-      </div>
+      <DirectionsExampleGoogleMap
+        containerElement={
+          <div style={{ height: `100%`, width: `100%` }} />
+        }
+        mapElement={
+          <div style={{ height: `100%`, width: `100%` }} />
+        }
+        center={this.state.origin}
+        directions={this.state.directions}
+      />
     );
   }
 }

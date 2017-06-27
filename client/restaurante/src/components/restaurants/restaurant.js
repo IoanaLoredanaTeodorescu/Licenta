@@ -7,18 +7,26 @@ import LogoImgOpening from '../../assets/graphic/opening.png';
 import LogoImgTelephone from '../../assets/graphic/mobile.png';
 import LogoImgWebsite from '../../assets/graphic/website.png';
 import Raiting from '../rating/rating';
+import Autentificare from '../autentificare-inregistrare/autentificare';
+import Inregistrare from '../autentificare-inregistrare/inregistrare';
 
 
 class Restaurant extends Component {
     constructor(props){
     	super(props);
     	this.state = {
-            tagBarVisible: false
+            tagBarVisible: false,
+            loginModalVisibility: false,
+            viewModal: 'autentificare'
         };
         this.ifNotEmptyReturn = this.ifNotEmptyReturn.bind(this);
         this.handleClickButonTag = this.handleClickButonTag.bind(this);
         this.renderTagsBar = this.renderTagsBar.bind(this);
         this.handleClickButonAddReview = this.handleClickButonAddReview.bind(this);
+        this.changeVisibilityLoginModal = this.changeVisibilityLoginModal.bind(this);
+        this.changeViewModalToSignup = this.changeViewModalToSignup.bind(this);
+        this.changeViewModalToLogin = this.changeViewModalToLogin.bind(this);
+        this.showModal = this.showModal.bind(this);
     }
 
     ifNotEmptyReturn(input, name) {
@@ -125,16 +133,63 @@ class Restaurant extends Component {
 
     handleClickButonAddReview(restaurant, logged) {
         if(logged === false) {
-            this.props.redirectToLogin();
-        } else this.props.onClickName(restaurant);
+            this.setState({loginModalVisibility: true});
+        } else this.props.onClickName(restaurant, true);
     }
 
+    changeVisibilityLoginModal() {
+        this.setState({loginModalVisibility: !this.state.loginModalVisibility});
+    }
+
+    changeViewModalToSignup() {
+        this.setState({viewModal: 'inregistrare'});
+    }
+
+    changeViewModalToLogin() {
+        this.setState({viewModal: 'autentificare'});
+    }
+
+
+
+    showModal() {
+        if(this.state.loginModalVisibility === true) {
+            if(this.state.viewModal === 'autentificare') {
+                return (
+                    <div className='login-modal-wrapper' onClick={() => this.changeVisibilityLoginModal()}>
+                        <div className='login-modal' onClick={(e) => e.stopPropagation()}>
+                            <Autentificare
+                                redirectToSignup={this.changeViewModalToSignup}
+                                loginCallback={this.props.isLogged}
+                                userData={this.props.userData}
+                                redirect={() => {
+                                    this.changeVisibilityLoginModal();
+                                    this.props.onClickName(this.props.restaurant[0]);
+                                }}
+                                getMyRestaurants={this.getMyRestaurants}
+                            />
+                        </div>
+                    </div>
+                );
+            } else if(this.state.viewModal === 'inregistrare') {
+                return (
+                    <div className='login-modal-wrapper' onClick={() => this.changeVisibilityLoginModal()}>
+                        <div className='login-modal' onClick={(e) => e.stopPropagation()}>
+                            <Inregistrare
+                                redirectToLogin={this.changeViewModalToLogin}
+                                buttonName='Înregistrare'
+                                typeOfButton='signup'
+                            />
+                        </div>
+                    </div>
+                );
+            }
+        }
+    }
 
     render() {
         let {id, name, raiting, address, tags, lat, lng, phone, opening_hours, website} = this.props.restaurant[0];
         let array_tags = tags.split(",");
         let rating = raiting === '' ? 0 : raiting;
-        console.log(website)
         var i=0;
         return (
             <div key={id} className='restaurant'>
@@ -174,6 +229,8 @@ class Restaurant extends Component {
                         <span className='text-tolltip-add-review tooltiptext-add-review'>Scrie recenzie</span>
                     </div>
                 </div>
+
+                {this.showModal()}
     		</div>
         );
     }

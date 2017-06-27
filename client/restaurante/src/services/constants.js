@@ -16,6 +16,9 @@ const firstPageLoggedTabs = [{
 		id: 'my-restaurants',
 		name: 'Restaurantele mele'
 	}, {
+		id: 'my-reviews',
+		name: 'Recenziile mele'
+	}, {
 		id: 'map-logged-true',
 		name: 'Hartă'
     }, {

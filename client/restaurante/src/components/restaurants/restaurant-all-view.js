@@ -5,22 +5,37 @@ import Raiting from '../rating/rating';
 import LogoImgAddress from '../../assets/graphic/location.png';
 import LogoImgOpening from '../../assets/graphic/opening.png';
 import LogoImgTelephone from '../../assets/graphic/mobile.png';
+import Autentificare from '../autentificare-inregistrare/autentificare';
+import Inregistrare from '../autentificare-inregistrare/inregistrare';
 
 class RestaurantAllView extends Component {
     constructor() {
         super();
         this.state = {
-            restaurantReviews: []
+            restaurantReviews: [],
+            buttonAddClicked: false,
+            loginModalVisibility: false,
+            viewModal: 'autentificare'
         }
-        this.searchIfIsLogged = this.searchIfIsLogged.bind(this);
         this.ifNotEmptyReturnHours = this.ifNotEmptyReturnHours.bind(this);
         this.ifNotEmptyReturnTelephone = this.ifNotEmptyReturnTelephone.bind(this);
         this.ifNotEmptyReturnWebsite = this.ifNotEmptyReturnWebsite.bind(this);
+        this.handleButtonAddClicked = this.handleButtonAddClicked.bind(this);
+        this.showAddReview = this.showAddReview.bind(this);
+        this.showModal = this.showModal.bind(this);
+        this.changeVisibilityLoginModal = this.changeVisibilityLoginModal.bind(this);
+        this.changeViewModalToSignup = this.changeViewModalToSignup.bind(this);
+        this.changeViewModalToLogin = this.changeViewModalToLogin.bind(this);
+        this.handleClickedAddReviewButton = this.handleClickedAddReviewButton.bind(this);
+        this.getReviews = this.getReviews.bind(this);
     }
 
     componentWillMount() {
-        //fetch('/restaurantid', {method: 'POST', body: JSON.stringify({id_restaurant: this.props.idRestaurant}), headers: {"Content-Type": "application/json"}})
-        fetch('/restaurantid/'+this.props.idRestaurant, {method: 'GET'})
+        this.getReviews(this.props.idRestaurant);
+    }
+
+    getReviews(idRestaurant) {
+        fetch('/restaurantid/' + idRestaurant, {method: 'GET'})
         .then(response => {
             if(typeof response === 'object') {
                 return response.json();
@@ -38,12 +53,97 @@ class RestaurantAllView extends Component {
         .catch(e => {
             console.error('Error->', e);
         });
+
+        if(this.props.isOnButton === true && this.props.logged === true) {
+            this.setState({buttonAddClicked: true});
+        }
     }
 
-    searchIfIsLogged(logged) {
-        if(logged === true) {
-            return (<AddReview />);
+    changeVisibilityLoginModal() {
+        this.setState({loginModalVisibility: !this.state.loginModalVisibility});
+    }
+
+    handleButtonAddClicked() {
+        this.setState({
+            //buttonAddClicked: true,
+            loginModalVisibility: true
+        });
+    }
+
+    changeViewModalToSignup() {
+        this.setState({viewModal: 'inregistrare'});
+    }
+
+    changeViewModalToLogin() {
+        this.setState({viewModal: 'autentificare'});
+    }
+
+    searchIfLogged(logged) {
+        this.setState({buttonAddClicked: true});
+    }
+
+
+    showModal() {
+        if(this.state.loginModalVisibility === true) {
+            if(this.state.viewModal === 'autentificare') {
+                console.log(this.props.userData);
+                return (
+                    <div className='login-modal-wrapper' onClick={() => this.changeVisibilityLoginModal()}>
+                        <div className='login-modal' onClick={(e) => e.stopPropagation()}>
+                            <Autentificare
+                                redirectToSignup={this.changeViewModalToSignup}
+                                loginCallback={this.props.isLogged}
+                                userData={this.props.userData}
+                                redirect={() => {
+                                    this.changeVisibilityLoginModal();
+                                    this.setState({buttonAddClicked: true});
+                                }}
+                                getMyRestaurants={this.getMyRestaurants}
+                            />
+                        </div>
+                    </div>
+                );
+            } else if(this.state.viewModal === 'inregistrare') {
+                return (
+                    <div className='login-modal-wrapper' onClick={() => this.changeVisibilityLoginModal()}>
+                        <div className='login-modal' onClick={(e) => e.stopPropagation()}>
+                            <Inregistrare
+                                redirectToLogin={this.changeViewModalToLogin}
+                                buttonName='Înregistrare'
+                                typeOfButton='signup'
+                            />
+                        </div>
+                    </div>
+                );
+            }
         }
+    }
+
+    handleClickedAddReviewButton() {
+
+    }
+
+    showAddReview(logged) {
+            if (logged === false) {
+                return (
+                    <div className='add-review-button-wrapper'>
+                        <div className='add-review-button tooltip-add-review' onClick={() => this.handleButtonAddClicked()}>
+                            &#43;
+                            <span className='text-tolltip-add-review tooltiptext-add-review'>Scrie recenzie</span>
+                        </div>
+                    </div>
+                );
+            } else if(logged === true) {
+                return (
+                    <AddReview
+                        idRestaurant={this.props.idRestaurant}
+                        userDataInfoEmail={this.props.userDataInfoEmail}
+                        userDataInfoName={this.props.userDataInfoName}
+                        callback={this.getReviews}
+                    />
+                );
+            }
+
     }
 
     ifNotEmptyReturnHours(input) {
@@ -139,10 +239,10 @@ class RestaurantAllView extends Component {
                             <Raiting rating={raiting}/>
                         </div>
                     </div>
+                    {this.showModal()}
+                    {this.showAddReview(this.props.logged)}
                     {this.ifNotEmptyReturnWebsite(restaurantToShow.website)}
-                    {this.searchIfIsLogged(this.props.logged)}
-
-                    <Reviews restaurantReviews={restaurantReviews}/>
+                    <Reviews restaurantReviews={restaurantReviews} />
                     <button className='back-button' onClick={this.props.buttonClicked}>Back</button>
                 </div>
             </div>

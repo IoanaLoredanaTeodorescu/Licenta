@@ -90,7 +90,7 @@ router.post('/', (req, res, next) => {
 				while(searchId(connection, idToken, id) === 1) {
 					idToken = createId();
 				}
-				connection.query('INSERT INTO users(id, fullname, email, password) VALUES(\"'+idToken+'\",\"'+fullNameValue+'\",\"'+emailValue+'\",\"'+passwordValue+'\");', (err, result) => {
+				connection.query('INSERT INTO users(id, name, email, password, user_credibility) VALUES(\"'+idToken+'\",\"'+fullNameValue+'\",\"'+emailValue+'\",\"'+passwordValue+ '\",\"' + '0' +');', (err, result) => {
 					if(err) {
 						console.log('Error insering in database! \nExecution stopped! \n' + 'Error message: ' + err.message);
 						res.json({typeError: 'DBinserting', text: 'Error inserting to database!', message: 'Eroare la crearea contului!'});

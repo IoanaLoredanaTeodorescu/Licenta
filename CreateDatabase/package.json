@@ -9,6 +9,8 @@
   "author": "Ioana Loredana T",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.3"
+    "@google-cloud/translate": "^0.8.2",
+    "express": "^4.15.3",
+    "google-translate": "^2.0.5"
   }
 }

@@ -11,6 +11,9 @@ var signup = require('./routes/signup');
 var login = require('./routes/login');
 var allrestaurants = require('./routes/allrestaurants');
 var restaurantid = require('./routes/restaurant-all-view');
+var add_review = require('./routes/add-review');
+var my_restaurants = require('./routes/my-restaurants');
+var my_reviews = require('./routes/my-reviews');
 
 var app = express();
 
@@ -31,6 +34,9 @@ app.use('/signup', signup);
 app.use('/login', login);
 app.use('/allrestaurants', allrestaurants);
 app.use('/restaurantid', restaurantid);
+app.use('/add-review', add_review);
+app.use('/my-restaurants', my_restaurants);
+app.use('/my-reviews', my_reviews);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
