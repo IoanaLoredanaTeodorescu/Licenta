@@ -32,8 +32,8 @@ router.get('/:email', function(req, res) {
         id = connection.threadId;
         console.log('Connection established!\nConnected with id: ' + id);
     });
-
-    connection.query('SELECT * FROM reviews WHERE author_email=\"' + email +'\";', (err, result) => {
+console.log('SELECT * FROM reviews WHERE author_email=\"' + email +'\" ORBER BY credibility_score ASC;')
+    connection.query('SELECT * FROM reviews WHERE author_email=\"' + email +'\" ORDER BY credibility_score DESC;', (err, result) => {
 	    if(err) {
 			console.log('Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message);
 			res.json({typeError: 'DBselect', text: 'Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message});

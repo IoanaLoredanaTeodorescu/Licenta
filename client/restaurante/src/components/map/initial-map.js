@@ -10,7 +10,6 @@ import {
 } from "react-google-maps";
 import Rating from 'react-rating';
 import LogoImgPinLocation2 from '../../assets/graphic/location_pin2.ico';
-import LogoImgPinLocation1 from '../../assets/graphic/location_pin1.ico';
 import LogoImgEmpty from '../../assets/graphic/ustensil_color.png';
 import LogoImgFull from '../../assets/graphic/ustensil.png';
 
@@ -89,10 +88,6 @@ function getCurrnetLocation(props, lat, lng) {
             </Marker>
         );
     }
-
-}
-
-function showDirection() {
 
 }
 

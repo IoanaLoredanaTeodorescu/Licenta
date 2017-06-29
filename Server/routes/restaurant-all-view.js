@@ -33,7 +33,7 @@ router.get('/:id', function(req, res) {
         console.log('Connection established!\nConnected with id: ' + id);
     });
 
-    connection.query('SELECT * FROM reviews WHERE id=\"' + id_restaurant +'\";', (err, result) => {
+    connection.query('SELECT * FROM reviews WHERE id=\"' + id_restaurant +'\" ORDER BY credibility_score DESC;', (err, result) => {
 	    if(err) {
 			console.log('Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message);
 			res.json({typeError: 'DBselect', text: 'Error searching in database! \nExecution stopped! \n' + 'Error message: ' + err.message});
@@ -47,6 +47,7 @@ router.get('/:id', function(req, res) {
                  obj.rating = result[i].rating;
                  obj.time = result[i].time;
                  obj.message = result[i].message;
+                 obj.credibility_score = result[i].credibility_score;
                  obj_response.push(obj);
 
              }

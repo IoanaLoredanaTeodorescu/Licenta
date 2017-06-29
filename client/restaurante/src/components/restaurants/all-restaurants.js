@@ -69,6 +69,7 @@ class AllRestaurants extends Component {
 			);
 		} else {
 			let k = 0;
+			var arr;
 			return (
 				<div>
 					<div className='input-search'>
@@ -86,7 +87,7 @@ class AllRestaurants extends Component {
 						this.props.restaurants.map( item => {
 							if(this.props.tagRestaurant === '') {
 								if(item.name.toLowerCase().indexOf(this.state.inputValue.toLowerCase()) > -1) {
-									var arr = [].concat(item);
+									arr = [].concat(item);
 									return (
 										<Restaurant key={k++}
 											redirectToLogin={this.props.redirectToLogin}
@@ -101,7 +102,7 @@ class AllRestaurants extends Component {
 									);
 								}
 							} else if(item.tags.toLowerCase().indexOf(this.props.tagRestaurant.toLowerCase()) > -1) {
-								var arr = [].concat(item);
+								arr = [].concat(item);
 								return (
 									<Restaurant key={k++}
 										redirectToLogin={this.props.redirectToLogin}

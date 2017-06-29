@@ -43,7 +43,7 @@ class RestaurantAllView extends Component {
         })
         .then(resp => {
             if(resp.message && typeof resp.message === 'object') {
-                this.setState({restaurantReviews: this.state.restaurantReviews.concat(resp.message)});
+                this.setState({restaurantReviews: resp.message});
             } else {
                 if(resp.message) {
                     console.log(resp.message);
@@ -127,7 +127,7 @@ class RestaurantAllView extends Component {
             if (logged === false) {
                 return (
                     <div className='add-review-button-wrapper'>
-                        <div className='add-review-button tooltip-add-review' onClick={() => this.handleButtonAddClicked()}>
+                        <div className='add-review-button tooltip-add-review' onClick={this.handleButtonAddClicked}>
                             &#43;
                             <span className='text-tolltip-add-review tooltiptext-add-review'>Scrie recenzie</span>
                         </div>
@@ -140,6 +140,7 @@ class RestaurantAllView extends Component {
                         userDataInfoEmail={this.props.userDataInfoEmail}
                         userDataInfoName={this.props.userDataInfoName}
                         callback={this.getReviews}
+                        callbackReloadRestaurants={this.props.callbackReloadRestaurants}
                     />
                 );
             }
@@ -239,9 +240,9 @@ class RestaurantAllView extends Component {
                             <Raiting rating={raiting}/>
                         </div>
                     </div>
+                    {this.ifNotEmptyReturnWebsite(restaurantToShow.website)}
                     {this.showModal()}
                     {this.showAddReview(this.props.logged)}
-                    {this.ifNotEmptyReturnWebsite(restaurantToShow.website)}
                     <Reviews restaurantReviews={restaurantReviews} />
                     <button className='back-button' onClick={this.props.buttonClicked}>Back</button>
                 </div>

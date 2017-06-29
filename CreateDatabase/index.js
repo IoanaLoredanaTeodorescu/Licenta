@@ -11,17 +11,19 @@ var app = express();
 
 var restaurants = [];
 
-request('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=47.1742073,27.5707641&radius=500&type=restaurant&key=AIzaSyDRWyS08cDDl1u68x0Sb6pc5esEKaFm60A', (error, response) => {
+request('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=47.1742073,27.5707641&radius=500&type=restaurant&key=AIzaSyBMpIVClX0mMesnQ0-Bw_bKZroQWPGzHTQ', (error, response) => {
 	if (!error && response.statusCode === 200) {
     	restaurants = restaurants.concat(functionsForDatabase.getRestaurantsReference(response.body));
 		fs.writeFileSync('./scripts/insert_datas_into_restaurant.sql', '');
 		fs.writeFileSync('./scripts/insert_datas_into_reviews.sql', '');
 		fs.writeFileSync('./scripts/insert_datas_into_photos.sql', '');
+		console.log('>>>>>>>>>>', restaurants)
 		if(restaurants.length > 0) {
 			for(var i = 0; i < restaurants.length; i++) {
-				let link = 'https://maps.googleapis.com/maps/api/place/details/json?reference=' + restaurants[i].reference + '&sensor=true&key=AIzaSyDRWyS08cDDl1u68x0Sb6pc5esEKaFm60A';
+				let link = 'https://maps.googleapis.com/maps/api/place/details/json?reference=' + restaurants[i].reference + '&sensor=true&key=AIzaSyBMpIVClX0mMesnQ0-Bw_bKZroQWPGzHTQ';
 				request(link, (error, response) => {
 					if (!error && response.statusCode === 200) {
+						console.log(response.body)
 				    	functionsForDatabase.parseResponse(response.body);
 				  	}
 				  	else {
@@ -41,6 +43,7 @@ request('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=4
 
 
 setTimeout(() => {initDatabase.initDatabase()}, 3000);
+//setTimeout(() => {initDatabase.afisReviews()}, 3000);
 // setTimeout(() => {initDatabase.insertDataIntoReviews()}, 3000);
 // initDatabase.getMessages();
 // initDatabase.updateDatabase();

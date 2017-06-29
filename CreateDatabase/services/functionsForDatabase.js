@@ -3,17 +3,26 @@ var fs = require('fs');
 var id = null;
 
 var mysql = require('mysql');
-var translateText = require('./translate-text.js');
 
 const Translate = require('@google-cloud/translate');
 
 // Your Google Cloud Platform project ID
-const projectId = 'licentajusttest';
+const projectId = 'licentaproject-172212';
 
 // Instantiates a client
 const translateClient = Translate({
-  projectId: projectId
+  projectId: projectId,
+  keyFilename: './LicentaProject-42d799eb0455.json'
 });
+
+var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
+
+var nlu = new NaturalLanguageUnderstandingV1({
+    username: "df9bbdc6-1f3b-4a8f-82e5-e7e8b5b2ef57",
+  password: "T6XYB7ck8Qls",
+  version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+});
+
 
 function connectionEnd(conn, id) {
 	conn.end((err) => {
@@ -60,13 +69,13 @@ module.exports = {
 		let website = restaurant.website || '';
 
 		let existingText = fs.readFileSync('./scripts/insert_datas_into_restaurant.sql').toString();
-
 		if(existingText.indexOf(id) < 0) {
 			var stringForInsert = 'INSERT INTO restaurants(id, name, address, lat, lng, tags, phone, opening_hours, reference, rating, website) VALUES(\"'+id+'\",\"'+name+'\",\"'+address+'\",\"'+lat+'\",\"'+lng+'\",\"';
 			stringForInsert += tags.slice(0,-2) + '\",\"' + phone + '\",\"' + opening_hours + '\",\"' + reference + '\",\"' + rating + '\",\"' + website +'\");\n';
 			fs.appendFileSync('./scripts/insert_datas_into_restaurant.sql', stringForInsert);
 
 			for(var j = 0; j < reviews.length; j++) {
+                let credibility_score = 0;
 				let author_name = reviews[j].author_name;
 				let profile_photo_url = reviews[j].profile_photo_url;
 				let rating = reviews[j].rating;
@@ -75,37 +84,80 @@ module.exports = {
 
 				message = message.replace(/"/g, '\\"');
 
-				//aici vreau sa transform mesajul
-				// let test = translateText.translateTextInEn(message, 'en');
-				// console.log("test translate", test);
-
-				let test = translateClient.translate(message, 'en')
+				translateClient.translate(message, 'en')
 		         .then ((results) => {
-
-		            //translation = results[0];
-		            // console.log(`Text: ${text}`);
-		            // console.log(`Translation: ${translation}`);
 		            return results[1].data.translations[0].translatedText;
-		            //return translation;
-
-		            // var message = results[1].data.translations[0].translatedText;
-		            // return message;
 		          })
 				  .then((result) => {
                         message = result;
-                        message = message.replace(/"/g, '\\"');
+                        let author_email = '';
+                        message = message.trim();
 
-          				let author_email = '';
+                        if(message.length > 0 ){
+                        nlu.analyze(
+                        {
+                         		'html': message,
+                         		'features': {
+                         			'sentiment': {}
+                         		}
+                         	},
+                         	function(err, response) {
+                         		if (err)
+                         			console.log('Error:', err);
+                         		else {
+                         			let rate = rating;
+                         			score = parseFloat(JSON.parse(JSON.stringify(response, null, 2)).sentiment.document.score);
+                         			rate = parseFloat(rate);
+                         			let newRate = null;
+                         			if(rate < 3) {
+                         				newRate = (-1) * rate;
+                        			} else newRate = rate;
 
-          				var stringForInsertReviews = 'INSERT INTO reviews VALUES(\"' + id + '\",\"' + author_name + '\",\"' + author_email + '\",\"' + profile_photo_url + '\",\"' + rating + '\",\"' + time + '\",\"' + message + '\");\n';
-          				fs.appendFileSync('./scripts/insert_datas_into_reviews.sql', stringForInsertReviews);
-				  })
+                        			if(score < 0 && newRate < 0) {
+                        				switch (newRate) {
+                        					case -1:
+                        						newRate = -5;
+                        						break;
+                        					case -2:
+                        						newRate = -4;
+                        					default:
+                        						newRate = newRate;
+                        				}
+                        				credibility_score = (-1) * (score + newRate);
+                        			} else if(score >= 0 && newRate > 0) {
+                        				credibility_score = score + newRate;
+                        			} else if(score < 0 && newRate > 0) {
+                        				credibility_score = score + (-1) * newRate;
+                        			} else if(score >= 0 && newRate < 0) {
+                        				switch (newRate) {
+                        					case -1:
+                        						newRate = -5;
+                        						break;
+                        					case -2:
+                        						newRate = -4;
+                        					default:
+                        						newRate = newRate;
+                        				}
+
+                        				credibility_score = (-1) * score + newRate;
+                        			}
+                        		}
+                                message = message.replace(/"/g, '\\"');
+                                var stringForInsertReviews = 'INSERT INTO reviews VALUES(\"' + id + '\",\"' + author_name + '\",\"' + author_email + '\",\"' + profile_photo_url + '\",\"' + rating + '\",\"' + time + '\",\"' + message + '\",\"' + credibility_score + '\");\n';
+                                fs.appendFileSync('./scripts/insert_datas_into_reviews.sql', stringForInsertReviews);
+                        	})
+                        } else {
+                            credibility_score = 0;
+                            message = message.replace(/"/g, '\\"');
+                            var stringForInsertReviews = 'INSERT INTO reviews VALUES(\"' + id + '\",\"' + author_name + '\",\"' + author_email + '\",\"' + profile_photo_url + '\",\"' + rating + '\",\"' + time + '\",\"' + message + '\",\"' + credibility_score + '\");\n';
+                            fs.appendFileSync('./scripts/insert_datas_into_reviews.sql', stringForInsertReviews);
+                        }
+
+
+                  })
 		          .catch((err) => {
-		            console.error('ERROR:', err);
+		            console.error('message', message, 'ERROR:', err);
 		          });
-
-				//   console.log(test)
-
 
 			}
 

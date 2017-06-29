@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import _ from 'lodash';
 import Review from './review';
 
 class Reviews extends Component {
@@ -37,12 +38,13 @@ class Reviews extends Component {
             return (<div className='message-zero-result'>Nu există recenzii!</div>);
         } else {
             let k = 0;
+            let newRestaurantReviews = _.reverse(_.sortBy(restaurantReviews, 'credibility_score'));
             return (
                 <div className='reviews'>
                     {
-                        restaurantReviews.map(review => {
+                        newRestaurantReviews.map(review => {
                             return (
-                                <Review key={k++} review={review}/>
+                                <Review key={k++} review={review} />
                             );
                         })
                     }

@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import Rating from 'react-rating';
 import RestaurantsMap from '../map/map';
-import Lightbox from 'react-images';
 import LogoImgAddress from '../../assets/graphic/location.png';
 import LogoImgOpening from '../../assets/graphic/opening.png';
 import LogoImgTelephone from '../../assets/graphic/mobile.png';
@@ -99,7 +97,9 @@ class Restaurant extends Component {
                         </div>
                     );
                 }
+                break;
             default:
+                break;
         }
     }
 
@@ -187,7 +187,7 @@ class Restaurant extends Component {
     }
 
     render() {
-        let {id, name, raiting, address, tags, lat, lng, phone, opening_hours, website} = this.props.restaurant[0];
+        let {id, name, raiting, address, tags, phone, opening_hours, website} = this.props.restaurant[0];
         let array_tags = tags.split(",");
         let rating = raiting === '' ? 0 : raiting;
         var i=0;

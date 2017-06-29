@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import Header from '../header/header';
 import Constants from '../../services/constants';
 import Autentificare from '../autentificare-inregistrare/autentificare';
@@ -7,7 +8,6 @@ import AllRestaurants from '../restaurants/all-restaurants';
 import RestaurantAllView from '../restaurants/restaurant-all-view';
 import Reviews from '../reviews/reviews';
 import RestaurantsMap from '../map/map';
-import DirectionsExampleGoogleMap from '../map/map_test';
 
 class FirstPage extends Component {
 
@@ -36,6 +36,8 @@ class FirstPage extends Component {
         this.handleClickOnInfoBox = this.handleClickOnInfoBox.bind(this);
         this.changeTagView = this.changeTagView.bind(this);
         this.setMyRestaurantsId = this.setMyRestaurantsId.bind(this);
+        this.getAllRestaurants = this.getAllRestaurants.bind(this);
+        this.callbackReloadRestaurants = this.callbackReloadRestaurants.bind(this);
     }
 
     changeTab(id) {
@@ -46,6 +48,11 @@ class FirstPage extends Component {
 	}
 
     componentWillMount() {
+        this.getAllRestaurants();
+    }
+
+    getAllRestaurants() {
+        console.log('get all restaurants apel');
         fetch('/allrestaurants', {method: 'GET'})
         .then(response => {
             if(typeof response === 'object') {
@@ -67,6 +74,11 @@ class FirstPage extends Component {
         });
     }
 
+    callbackReloadRestaurants(idRestaurant) {
+        //this.getAllRestaurants();
+        //this.handleClickName({id: idRestaurant});
+    }
+
     componentWillReceiveProps(nextProps) {
         if(nextProps.logged === false) {
             this.setState({myRestaurants: []});
@@ -84,31 +96,23 @@ class FirstPage extends Component {
                     }
                 }
             }
-            this.setState({myRestaurants: myRestaurants});
+            let newMyRestaurants = _.reverse(_.sortBy(myRestaurants, 'raiting'));
+            console.log(newMyRestaurants)
+            this.setState({myRestaurants: newMyRestaurants});
         } else this.setState({myRestaurants: []});
 
     }
 
-    handleClickName(props, isOnButton) {
-        if(isOnButton === false) {
-            this.setState({
-                showOneRestaurant: true,
-                idRestaurantShowed: props.id,
-                restaurantToShow: props,
-                isOnButton: false
-            });
-        } else {
-            this.setState({
-                showOneRestaurant: true,
-                idRestaurantShowed: props.id,
-                restaurantToShow: props,
-                isOnButton: true
-            });
-        }
+    handleClickName(props) {
+        this.setState({
+            showOneRestaurant: true,
+            idRestaurantShowed: props.id,
+            restaurantToShow: props,
+            isOnButton: true
+        });
     }
 
     handleClickTag(tag) {
-        console.log(tag);
         this.setState({restaurantsTag: tag});
     }
 
@@ -127,7 +131,7 @@ class FirstPage extends Component {
     handleClickOnInfoBox(props) {
         this.setState({
             showOneRestaurant: true,
-            idRestaurantShowed: props.id,
+            idRestaurantShowed: props.id || props,
             restaurantToShow: props
         });
     }
@@ -166,6 +170,7 @@ class FirstPage extends Component {
                                 restaurantToShow={this.state.restaurantToShow}
                                 buttonClicked={this.handleButtonClicked}
                                 idRestaurant={this.state.idRestaurantShowed}
+                                callbackReloadRestaurants={this.getAllRestaurants}
                             />);
                     }
                 break;
@@ -180,6 +185,7 @@ class FirstPage extends Component {
                             idRestaurant={this.state.idRestaurantShowed}
                             isLogged={this.props.isLogged}
                             userData={this.setUserData}
+                            callbackReloadRestaurants={this.getAllRestaurants}
                         />);
                 } else return (
                     <RestaurantsMap
@@ -203,7 +209,6 @@ class FirstPage extends Component {
                         redirectToLogin={this.changeTab.bind(this, 'login')}
                         buttonName='Înregistrare'
                         typeOfButton='signup'
-                        redirectToLogin={this.changeTab.bind(this, 'login')}
                     />);
             case 'my-restaurants':
                 if(this.state.showOneRestaurant === false && this.state.tagRestaurant === '') {
@@ -236,8 +241,10 @@ class FirstPage extends Component {
                                 restaurantToShow={this.state.restaurantToShow}
                                 buttonClicked={this.handleButtonClicked}
                                 idRestaurant={this.state.idRestaurantShowed}
+                                callbackReloadRestaurants={this.getAllRestaurants}
                             />);
                     }
+                break;
             case 'my-reviews':
                 return (
                     <Reviews emailLogged={this.props.emailLogged} />
@@ -254,6 +261,7 @@ class FirstPage extends Component {
                             buttonClicked={this.handleButtonClicked}
                             idRestaurant={this.state.idRestaurantShowed}
                             userData={this.setUserData}
+                            callbackReloadRestaurants={this.getAllRestaurants}
                         />);
                 } else return (
                     <RestaurantsMap

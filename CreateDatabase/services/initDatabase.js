@@ -5,13 +5,11 @@ var mysql = require('mysql');
 
 var id = null;
 
-var messages = [];
-
 function connectionEnd(conn, id) {
 	conn.end((err) => {
 		if(err) {
 			console.log('Error disconnecting from database! \nExecution stopped! \n' + 'Error message: ' + err.message);
-			res.json({typeError: 'DBdisconnect', text: 'Error disconnecting from database! \nExecution stopped! \n' + 'Error message: ' + err.message});
+			//res.json({typeError: 'DBdisconnect', text: 'Error disconnecting from database! \nExecution stopped! \n' + 'Error message: ' + err.message});
 		}
 		console.log('Connection with id: ' + id + ' disconected!');
 	});
@@ -101,7 +99,7 @@ module.exports={
 		}
 	},
 
-	getMessages: () => {
+	afisReviews: () => {
 		var connection = mysql.createConnection({
 										  	host: "localhost",
 										 	user: "root",
@@ -119,23 +117,19 @@ module.exports={
 			console.log('Connection established!\nConnected with id: ' + id);
 		});
 
-
 		connection.query('SELECT message FROM reviews', (err, result) => {
 			if (err) {
-				console.log('Error creating table! \nExecution stopped! \n' + 'Error message: ' + err.message);
+				console.log('Error inserting in photos table! \nExecution stopped! \n' + 'Error message: ' + err.message);
 				connectionEnd(connection, id);
 				process.exit();
 			} else {
-				for(var i = 0; i < result.length; i++) {
-					messages.push(result[i].message);
+				console.log('Data inserted for table photos!');
+				for( var i = 0; i< result.length;i++) {
+					console.log(result[i])
 				}
-				console.log(messages)
 				connectionEnd(connection, id);
 			}
 		});
-	},
-
-	updateDatabase: () => {
 
 	}
 }

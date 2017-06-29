@@ -23,7 +23,8 @@ CREATE OR REPLACE TABLE reviews (
 	profile_photo_url VARCHAR(500),
 	rating VARCHAR(4),
 	time INTEGER(25),
-	message VARCHAR(600)
+	message VARCHAR(600),
+	credibility_score VARCHAR(10)
 );
 
 CREATE OR REPLACE TABLE photos (

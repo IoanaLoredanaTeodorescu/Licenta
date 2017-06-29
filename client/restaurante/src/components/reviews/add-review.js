@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Raiting from '../rating/rating';
+import {isValidInput} from '../../services/form-validation';
 
 class AddReview extends Component {
 
@@ -20,6 +21,7 @@ class AddReview extends Component {
         this.yesAddReview = this.yesAddReview.bind(this);
         this.noAddReview = this.noAddReview.bind(this);
         this.setButtonAddClicked = this.setButtonAddClicked.bind(this);
+        this.handleCLickOnTextArea = this.handleCLickOnTextArea.bind(this);
     }
 
     handleRateHover(rate) {
@@ -51,6 +53,7 @@ class AddReview extends Component {
         let idRestaurant = this.props.idRestaurant;
         let email = this.props.userDataInfoEmail;
         let name = this.props.userDataInfoName;
+        if(isValidInput(textareaValue)) {
             fetch('/add-review', {method: 'POST',
                 body: JSON.stringify({rate: rate, textareaValue: textareaValue, idRestaurant: idRestaurant, email: email, name: name}),
                 headers: {"Content-Type": "application/json"}})
@@ -63,6 +66,7 @@ class AddReview extends Component {
                 .then(resp => {
                     if(resp.typeError === 'NoError') {
                         console.log(resp.message);
+                        this.props.callbackReloadRestaurants();
                         this.props.callback(idRestaurant);
                         this.setState({
                             rate: 5,
@@ -79,7 +83,7 @@ class AddReview extends Component {
                     this.setState({addReviewError: 'A apărut o eroare neașteptată la adăugarea recenziei!'});
                     console.error('Error->', e);
             });
-            //this.props.callback();
+        }
     }
 
     popUp(rate, text) {
@@ -100,10 +104,20 @@ class AddReview extends Component {
         }
 
     setButtonAddClicked() {
-        this.setState({
-            buttonAddClicked: true,
-            modalVisibility: true
-        });
+        let {textareaValue} = this.state;
+        if(isValidInput(textareaValue)){
+            this.setState({
+                buttonAddClicked: true,
+                modalVisibility: true
+            });
+        }
+        else {
+             this.setState({addReviewError: 'You have to insert a text!'});
+        }
+    }
+
+    handleCLickOnTextArea() {
+        this.setState({addReviewError: ''});
     }
 
     render() {
@@ -112,7 +126,7 @@ class AddReview extends Component {
                 <div className='rating-review' >
                     <Raiting rating={this.state.rate} logged={true} rate={this.handleRateHover} />
                 </div>
-                <textarea value={this.state.textareaValue} onChange={this.handleChange} type="text" className='review-textarea' placeholder='Scrie o recenzie...' maxLength="600"/>
+                <textarea value={this.state.textareaValue} onClick={() => this.handleCLickOnTextArea()} onChange={this.handleChange} type="text" className='review-textarea' placeholder='Scrie o recenzie...' maxLength="600"/>
                 <span className='error'>{this.state.addReviewError}</span>
                 <div className='buton-add-review-wrapper'>
                     <button className='buton-add-review' onClick={() => this.setButtonAddClicked()}>Adaugă recenzie</button>

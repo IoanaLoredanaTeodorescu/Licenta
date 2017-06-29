@@ -97,7 +97,7 @@ class SignupForm extends Component {
 
 	async signUpRequest() {
 
-		let {fullNameValue, emailValue, passwordValue, rePasswordValue, currentEmail} = this.state;
+		let {fullNameValue, emailValue, passwordValue, rePasswordValue} = this.state;
 
 		await this.fullNameValidation(fullNameValue);
 		await this.emailValidation(emailValue);
