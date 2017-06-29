@@ -17,13 +17,11 @@ request('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=4
 		fs.writeFileSync('./scripts/insert_datas_into_restaurant.sql', '');
 		fs.writeFileSync('./scripts/insert_datas_into_reviews.sql', '');
 		fs.writeFileSync('./scripts/insert_datas_into_photos.sql', '');
-		console.log('>>>>>>>>>>', restaurants)
 		if(restaurants.length > 0) {
 			for(var i = 0; i < restaurants.length; i++) {
 				let link = 'https://maps.googleapis.com/maps/api/place/details/json?reference=' + restaurants[i].reference + '&sensor=true&key=AIzaSyBMpIVClX0mMesnQ0-Bw_bKZroQWPGzHTQ';
 				request(link, (error, response) => {
 					if (!error && response.statusCode === 200) {
-						console.log(response.body)
 				    	functionsForDatabase.parseResponse(response.body);
 				  	}
 				  	else {

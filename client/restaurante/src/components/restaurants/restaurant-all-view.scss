@@ -30,35 +30,6 @@
                 align-items: center;
             }
 
-            .add-review-button-wrapper {
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-end;
-                align-items: center;
-
-                .add-review-button {
-                    color: white;
-                    font-size: 25px;
-                    font-weight: bold;
-                    background-color: $sienna;
-                    border: 2px solid grey;
-                    border-radius: 50%;
-                    height: 30px;
-                    width: 30px;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-
-                    .text-tolltip-add-review {
-                        font-size: 16px;
-                    }
-                }
-
-                .add-review-button:hover {
-                    cursor: pointer;
-                }
-            }
 
             .contact-wrapper-view {
                 display: flex;
@@ -122,8 +93,51 @@
     }
 }
 
+.add-review-button-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    .add-review-button {
+        color: white;
+        font-size: 25px;
+        font-weight: bold;
+        background-color: $sienna;
+        border: 2px solid grey;
+        border-radius: 50%;
+        height: 30px;
+        width: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .text-tolltip-add-review {
+            font-size: 16px;
+        }
+    }
+
+    .add-review-button:hover {
+        cursor: pointer;
+    }
+}
 
 .back-button {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid black;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+.back-button:hover {
+    cursor: pointer;
+}
+
+.back-button-button {
     position: fixed;
     right: 10px;
     bottom: 10px;

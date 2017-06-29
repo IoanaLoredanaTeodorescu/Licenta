@@ -17,9 +17,9 @@ const translateClient = Translate({
 var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 
 var nlu = new NaturalLanguageUnderstandingV1({
-    username: "df9bbdc6-1f3b-4a8f-82e5-e7e8b5b2ef57",
-  password: "T6XYB7ck8Qls",
-  version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+    username: "4359a02e-478e-4120-be80-6f69fbba2199",
+    password: "Iif3txh3puVc",
+    version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
 });
 
 function connectionEnd(conn, id) {

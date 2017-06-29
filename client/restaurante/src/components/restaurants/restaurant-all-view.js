@@ -5,6 +5,7 @@ import Raiting from '../rating/rating';
 import LogoImgAddress from '../../assets/graphic/location.png';
 import LogoImgOpening from '../../assets/graphic/opening.png';
 import LogoImgTelephone from '../../assets/graphic/mobile.png';
+import LogoImgBack from '../../assets/graphic/back.png';
 import Autentificare from '../autentificare-inregistrare/autentificare';
 import Inregistrare from '../autentificare-inregistrare/inregistrare';
 
@@ -244,7 +245,7 @@ class RestaurantAllView extends Component {
                     {this.showModal()}
                     {this.showAddReview(this.props.logged)}
                     <Reviews restaurantReviews={restaurantReviews} />
-                    <button className='back-button' onClick={this.props.buttonClicked}>Back</button>
+                    <img className='back-button' onFocus={this.props.buttonClicked} src={LogoImgBack} />
                 </div>
             </div>
         );

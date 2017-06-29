@@ -3,7 +3,6 @@ import Raiting from '../rating/rating';
 class Review extends Component {
     render() {
         let {credibility_score} = this.props.review;
-        console.log('credibility_score', credibility_score)
 
         var a = null;
         if(credibility_score < 0) {

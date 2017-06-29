@@ -289,3 +289,25 @@
         overflow: auto;
     }
 }
+
+.search-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    .img-search {
+        border-radius: 50%;
+        height: 25px;
+        width: 25px;
+        overflow: hidden;
+    }
+
+    .img-search:hover {
+        cursor: pointer;
+    }
+}
+
+.input-search-class {
+    height: 35px;
+    font-size: 16px;
+}

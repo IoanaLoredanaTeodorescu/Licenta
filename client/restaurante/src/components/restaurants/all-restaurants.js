@@ -1,18 +1,22 @@
 import React, {Component} from 'react';
 import Restaurant from './restaurant';
 import {getSizeOfObject} from '../../services/functions';
+import LogoImgSearch from '../../assets/graphic/search.png';
 
 class AllRestaurants extends Component {
 
 	constructor(props){
 		super(props);
 		this.state = {
-			inputValue: ''
+			inputValue: '',
+			showSearch: false
 		};
 		this.changeHandler = this.changeHandler.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 		this.renderButton = this.renderButton.bind(this);
 		this.renderRestaurants = this.renderRestaurants.bind(this);
+		this.showSearch = this.showSearch.bind(this);
+		this.handleCickImgSearch = this.handleCickImgSearch.bind(this);
 	}
 
 	componentWillMount() {
@@ -57,9 +61,32 @@ class AllRestaurants extends Component {
 	renderButton() {
 		if(this.props.tagRestaurant !== '') {
 			return (
-				<button className='back-button' onClick={() => this.props.changeTagView()}>Șterge filtrul de tag</button>
+				<button className='back-button-button' onClick={() => this.props.changeTagView()}>Șterge filtrul de tag</button>
 			);
 		}
+	}
+
+	showSearch() {
+		if(this.state.showSearch === true) {
+			return (
+				<div className='input-search-class'>
+					<input
+						id='input-search'
+						type="text"
+						placeholder="Caută după nume..."
+						value={this.state.inputValue}
+						onChange={this.changeHandler}
+						className='input-search-value'
+						onClick={this.handleClick}
+						autoFocus
+					/>
+				</div>
+			);
+		}
+	}
+
+	handleCickImgSearch() {
+		this.setState({showSearch: !this.state.showSearch});
 	}
 
 	renderRestaurants() {
@@ -72,16 +99,9 @@ class AllRestaurants extends Component {
 			var arr;
 			return (
 				<div>
-					<div className='input-search'>
-						<input
-							id='input-search'
-							type="text"
-							placeholder="Caută după nume..."
-							value={this.state.inputValue}
-							onChange={this.changeHandler}
-							className='input-search-value'
-							onClick={this.handleClick}
-						/>
+					<div className='search-wrapper'>
+						<img src={LogoImgSearch} className='img-search' onClick={this.handleCickImgSearch} />
+						{this.showSearch()}
 					</div>
 					{
 						this.props.restaurants.map( item => {
