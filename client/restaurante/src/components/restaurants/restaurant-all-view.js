@@ -245,7 +245,7 @@ class RestaurantAllView extends Component {
                     {this.showModal()}
                     {this.showAddReview(this.props.logged)}
                     <Reviews restaurantReviews={restaurantReviews} />
-                    <img className='back-button' onFocus={this.props.buttonClicked} src={LogoImgBack} />
+                    <img className='back-button' onClick={this.props.buttonClicked} src={LogoImgBack} />
                 </div>
             </div>
         );

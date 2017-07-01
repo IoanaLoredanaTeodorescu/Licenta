@@ -173,6 +173,9 @@ table {
       .vertical-align .wrapper .main-wrapper .error-input {
         border: 1px solid red; }
 
+.suggest {
+  cursor: pointer; }
+
 body {
   font-family: "Garamond";
   min-height: 100%; }

@@ -128,7 +128,7 @@ class Autentificare extends Component {
         				<button className="form-button" onClick={this.loginRequest}>Autentificare</button>
                         <div className='suggest-wrapper'>
 							<span className='sugget-message'>Nu ai cont?</span>
-							<span className='suggest' onClick={() => this.props.redirectToSignup()}>Înregistrare</span>
+							<span className='suggest' onClick={() => this.props.redirectToSignup()}> Înregistrare</span>
 						</div>
         			</div>
                 </div>
