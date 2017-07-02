@@ -1,0 +1,72 @@
+.vertical-align {
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+	justify-content: center;
+
+	.wrapper {
+		width: 100%;
+		background-color: rgba(255, 255, 255, 0.6);
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		padding: 30px 40px;
+		min-width: 850px;
+
+		.main-wrapper {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			width: 500px;
+			padding-top: 15px;
+
+			.title {
+		        text-transform: uppercase;
+				text-align: center;
+				font-weight: bold;
+				margin-bottom: 10px;
+		        color: $b;
+				font-size: 50px;
+		    }
+
+			input {
+				display: block;
+				width: 100%;
+				height: 30px;
+				padding: 3px 3px 3px 10px;
+				border: 1px solid $a;
+				border-radius: 2px;
+				margin: 5px 0;
+			}
+
+			input::placeholder{
+				font-size: 14px;
+				color: $h;
+			}
+
+			button {
+				background-color: #ECF3F7;
+				font-weight: 700;
+				font-size: 14px;
+				color: #1F6894;
+				border: 1px solid $k;
+				border-radius: 2px;
+				margin: 0 auto;
+				padding: 6px 20px;
+				margin-top: 15px;
+				cursor:pointer;
+			}
+
+			.error {
+				color:red;
+			}
+
+			.error-input {
+				border: 1px solid red;
+			}
+		}
+	}
+}
+.suggest {
+	cursor: pointer;
+}
